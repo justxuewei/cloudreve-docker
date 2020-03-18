@@ -20,7 +20,7 @@ RUN echo ">>>>>> update dependencies <<<<<<" \
     && mv ./cloudreve ./main \
     && chmod +x ./main
 
-VOLUME ["/cloudreve/uploads", "/cloudreve/conf.ini", "/cloudreve/cloudreve.db"]
+VOLUME ["/cloudreve/uploads", "/downloads","/cloudreve/conf.ini", "/cloudreve/cloudreve.db"]
 
 EXPOSE 5212
 
