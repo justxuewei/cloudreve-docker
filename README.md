@@ -1,12 +1,16 @@
 # Cloudreve Docker
 
-此Docker镜像由Xavier Niu维护，基于：
+此Docker镜像由Xavier Niu维护。
+
+基于
 
 - lsiobase/alpine:3.11
 - golang: 1.14
 - cloudreve: 3.0.0-rc1
 
-该Docker镜像使用[xavier-niu/build-cloudreve-docker-action@master](https://github.com/xavier-niu/build-cloudreve-docker-action)编译Cloudreve源文件，将编译后的二进制文件拷贝至纯净alpine系统中，整个镜像体积不到20M。
+GitHub Actions 依赖
+
+- [xavier-niu/build-cloudreve-docker-action@master](https://github.com/xavier-niu/build-cloudreve-docker-action): 编译Cloudreve源文件。
 
 ## Cloudreve
 
@@ -14,14 +18,14 @@ Cloudreve能助您以最低的成本快速搭建公私兼备的网盘系统。
 
 官方网站：https://cloudreve.org
 
-Github：https://github.com/cloudreve/Cloudreve
+GitHub：https://github.com/cloudreve/Cloudreve
 
 ## 运行
 
 运行模式
 
 - OC: 仅Cloudreve
-- CAC: Caddy反带+Aria2离线下载服务+Cloudreve
+- CAC: Caddy反代+Aria2离线下载服务+Cloudreve
 
 ### OC
 
@@ -58,19 +62,20 @@ Volumes
 
 前提条件
 
+- 已安装docker
 - 一个域名并解析到服务器，这里以`https://cloudreve.example.com`为例
 
-创建Network
+Step1. 创建Network
 
 ```bash
 docker network create my-network
 ```
 
-创建Caddy配置文件
+Step2. 创建Caddy配置文件
 
 ```bash
 mkdir -p /dockercnf/caddy \
-	&& vim /docker/caddy/Caddyfile
+	&& vim /dockercnf/caddy/Caddyfile
 ```
 
 填入以下信息
@@ -84,7 +89,7 @@ cloudreve.example.com {
 }
 ```
 
-接下来启动Caddy服务
+Step3. 启动Caddy服务
 
 ```bash
 docker run -d \
@@ -99,7 +104,7 @@ docker run -d \
   abiosoft/caddy
 ```
 
-启动Aria2服务（如不需要离线下载功能该步骤略过）
+Step4. 启动Aria2服务（如不需要离线下载功能该步骤略过）
 
 ```bash
 docker run -d --name=aria2 \
@@ -126,7 +131,7 @@ docker run -d --name=aria2 \
 - `<PATH TO TEMP>`: 临时下载文件夹，需要与Cloudreve的`/downloads`对应
 - 如果不需要外网访问Aria2可以将`#1`所在行删除
 
-预创建Cloudreve的数据库和配置文件，这里以`/dockercnf/cloudreve`为cloudreve配置目录
+Step5. 预创建Cloudreve的数据库和配置文件，这里以`/dockercnf/cloudreve`为cloudreve配置目录
 
 ```bash
 mkdir -p /dockercnf/cloudreve \
@@ -134,7 +139,7 @@ mkdir -p /dockercnf/cloudreve \
 	&& touch /dockercnf/cloudreve/cloudreve.db
 ```
 
-启动Cloudreve
+Step6. 启动Cloudreve
 
 ```bash
 docker run -d \
@@ -142,7 +147,6 @@ docker run -d \
   -e PUID=1000 \ # optional
   -e PGID=1000 \ # optional
   -e TZ="Asia/Shanghai" \ # optional
-  -p 5212:5212 \ 
   --network my-network \
   --restart=unless-stopped \
   -v <PATH TO UPLOADS>:/cloudreve/uploads \
@@ -163,10 +167,14 @@ docker run -d \
 - `<PATH TO conf.ini>`: 配置文件
 - ` <PATH TO cloudreve.db>`: 数据库文件
 
-配置Cloudreve
+Step7. 配置Cloudreve连接Aria2服务器
 
 - 以管理员身份登陆
 
-- 依次点击"参数设置 > 离线下载"，按照图示设置即可
+- 依次点击"参数设置 > 离线下载"
 
-  ![cloudreve](http://res.niuxuewei.com/2020-03-18-075910.jpg)
+  - RPC服务器地址: http://aria2:6800/
+  - RPC Secret: 参见`启动Aria2服务`中的`<SECRET>`
+  - 临时下载地址: /downloads
+  
+  - 其他选项默认即可
