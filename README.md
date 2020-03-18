@@ -126,9 +126,9 @@ docker run -d --name=aria2 \
 说明
 
 - PUID以及PGID的使用方法以及为什么使用参见: [Understanding PUID and PGID](https://docs.linuxserver.io/general/understanding-puid-and-pgid)
-
-- `<PATH TO CONFIG>`: Aria2的配置文件夹
-- `<PATH TO TEMP>`: 临时下载文件夹，需要与Cloudreve的`/downloads`对应
+- `<SECRET>`: Aria2 RPC密码（你可以去[这里](https://miniwebtool.com/zh-cn/random-string-generator/)生成随机字符串），请记下该密码，在后续Cloudreve设置Aria2中会使用
+- `<PATH TO CONFIG>`: Aria2的配置文件夹，例如`/dockercnf/aria2/conf`
+- `<PATH TO TEMP>`: 临时下载文件夹，需要与Cloudreve的`/downloads`对应，例如`/dockercnf/aria2/temp`
 - 如果不需要外网访问Aria2可以将`#1`所在行删除
 
 Step5. 预创建Cloudreve的数据库和配置文件，这里以`/dockercnf/cloudreve`为cloudreve配置目录
@@ -162,10 +162,10 @@ docker run -d \
 
 - PUID以及PGID的使用方法以及为什么使用参见: [Understanding PUID and PGID](https://docs.linuxserver.io/general/understanding-puid-and-pgid)
 
-- `<PATH TO UPLOADS>`:上传目录
-- `<PATH TO TEMP>`: 临时下载文件夹，需要与Aria的`/downloads`对应（如不需要离线下载功能`#1`可以删除）
-- `<PATH TO conf.ini>`: 配置文件
-- ` <PATH TO cloudreve.db>`: 数据库文件
+- `<PATH TO UPLOADS>`:上传目录, 例如`/sharedfolders`
+- `<PATH TO TEMP>`: 临时下载文件夹，需要与Aria的`/downloads`对应，例如`/dockercnf/aria2/temp`（如不需要离线下载功能`#1`可以删除）
+- `<PATH TO conf.ini>`: 配置文件，如`/dockercnf/cloudreve/conf.ini`
+- ` <PATH TO cloudreve.db>`: 数据库文件，如`/dockercnf/cloudreve/cloudreve.db`
 
 Step7. 配置Cloudreve连接Aria2服务器
 
