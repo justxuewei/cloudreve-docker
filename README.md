@@ -3,8 +3,10 @@
 此Docker镜像由Xavier Niu维护，基于：
 
 - lsiobase/alpine:3.11
-- cloudreve: 3.0.0-beta3
 - golang: 1.14
+- cloudreve: 3.0.0-rc1
+
+该Docker镜像使用[xavier-niu/build-cloudreve-docker-action@master](https://github.com/xavier-niu/build-cloudreve-docker-action)编译Cloudreve源文件，将编译后的二进制文件拷贝至纯净alpine系统中，整个镜像体积不到20M。
 
 ## Cloudreve
 
@@ -19,7 +21,8 @@ Github：https://github.com/cloudreve/Cloudreve
 使用Docker运行
 
 ```bash
-docker run --name cloudreve \
+docker run -d \
+  --name cloudreve \
   -e PUID=1000 \ # optional
   -e PGID=1000 \ # optional
   -e TZ="Asia/Shanghai" \ # optional
@@ -31,7 +34,11 @@ docker run --name cloudreve \
   xavierniu/cloudreve
 ```
 
-Environment Variables
+注意
+
+- 首次启动后请执行`docker logs -f cloudreve`获取初始密码
+
+环境变量
 
 - PUID以及PGID的使用方法以及为什么使用参见: [Understanding PUID and PGID](https://docs.linuxserver.io/general/understanding-puid-and-pgid)
 - `TZ`设置时区，默认值为`Asia/Shanghai`
