@@ -131,6 +131,17 @@ docker run -d --name=aria2 \
 - `<PATH TO TEMP>`: 临时下载文件夹，需要与Cloudreve的`/downloads`对应，例如`/dockercnf/aria2/temp`
 - 如果不需要外网访问Aria2可以将`#1`所在行删除
 
+需要额外编辑Aria2的配置文件以达到最好的效果（部分参数请根据自己实际情况调整），执行`vim /dockercnf/aria2/config/aria2.conf`
+
+```
+# 最大同时下载任务数
+max-concurrent-downloads=5
+# 同一服务器连接数
+max-connection-per-server=2
+# 注意：force-save设置为true可能会导致重启镜像后已完成的任务重复下载，最终占用存储空间
+force-save=false
+```
+
 Step5. 预创建Cloudreve的数据库和配置文件，这里以`/dockercnf/cloudreve`为cloudreve配置目录
 
 ```bash
