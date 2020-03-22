@@ -1,8 +1,5 @@
 name: Publish Docker
-on: 
-  push: 
-    branches: 
-      - master
+on: push
 jobs:
   latest-and-amd64:
     runs-on: ubuntu-latest
