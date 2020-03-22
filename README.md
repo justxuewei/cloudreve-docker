@@ -22,8 +22,8 @@
 - cloudreve: 3.0.0-rc1
 - base image
   - latest: golang:1.14.1-alpine3.11(builder), lsiobase/alpine:3.11(runtime)
-  - arm64v8-latest: arm64v8/golang:1.14.1-alpine3.11(builder), lsiobase/alpine:arm64v8-3.11(runtime)
-  - arm32v7-latest: arm32v7/golang:1.14.1-alpine3.11(builder), lsiobase/alpine:arm32v7-3.11(runtime)
+  - arm64v8: arm64v8/golang:1.14.1-alpine3.11(builder), lsiobase/alpine:arm64v8-3.11(runtime)
+  - arm32v7: arm32v7/golang:1.14.1-alpine3.11(builder), lsiobase/alpine:arm32v7-3.11(runtime)
 
 ## Cloudreve
 
