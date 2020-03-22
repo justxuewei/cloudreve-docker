@@ -1,0 +1,49 @@
+name: Publish Docker
+on: 
+  push: 
+    branches: 
+      - master
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: DockerHub login
+        env: 
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASS }}
+        run: |
+          echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
+      - name: Set up docker buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+      - name: Get tag name
+        id: tagName
+        uses: olegtarasov/get-tag@v2
+      - name: Build Dockerfile and push to DockerHub
+        run: |
+          REPO_NAME="xavierniu/cloudreve"
+          docker buildx build \
+            --platform linux/amd64 \
+            -t ${REPO_NAME}:latest -t ${REPO_NAME}:amd64 $([[ -z "${GIT_TAG_NAME}" ]] && echo "" || echo "-t ${REPO_NAME}:${GIT_TAG_NAME} -t ${REPO_NAME}:${GIT_TAG_NAME}-amd64")  \
+            --push \
+            . -f Dockerfile
+          docker buildx build \
+            --platform linux/arm64 \
+            -t ${REPO_NAME}:arm64v8 $([[ -z "${GIT_TAG_NAME}" ]] && echo "" || echo "-t ${REPO_NAME}:${GIT_TAG_NAME}-arm64v8")  \
+            --push \
+            . -f Dockerfile.aarch64
+          docker buildx build \
+            --platform linux/arm/v7 \
+            -t ${REPO_NAME}:arm32v7 $([[ -z "${GIT_TAG_NAME}" ]] && echo "" || echo "-t ${REPO_NAME}:${GIT_TAG_NAME}-arm32v7")  \
+            --push \
+            . -f Dockerfile.armhf
+      - name: Sync README.md
+        uses: meeDamian/sync-readme@v1.0.6
+        with:
+          user: xavierniu
+          pass: ${{ secrets.DOCKER_PASS }}
+          slug: xavierniu/cloudreve

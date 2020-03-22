@@ -2,15 +2,28 @@
 
 此Docker镜像由Xavier Niu维护。
 
+优势
+
+- 基于最新的Cloudreve V3
+- 长期维护
+- 镜像体积小
+- 支持多种架构
+- 安装简单
+- 内含详细的Cloudreve+Caddy+Aria2部署教程
+
+支持架构
+
+- linux/amd64: `xaiverniu/cloudreve:latest`
+- linux/arm64: `xaiverniu/cloudreve:arm64v8`
+- linux/arm/v7: `xaiverniu/cloudreve:arm32v7`
+
 基于
 
-- lsiobase/alpine:3.11
-- golang: 1.14
 - cloudreve: 3.0.0-rc1
-
-GitHub Actions 依赖
-
-- [xavier-niu/build-cloudreve-docker-action@master](https://github.com/xavier-niu/build-cloudreve-docker-action): 编译Cloudreve源文件。
+- base image
+  - latest: golang:1.14.1-alpine3.11(builder), lsiobase/alpine:3.11(runtime)
+  - arm64v8-latest: arm64v8/golang:1.14.1-alpine3.11(builder), lsiobase/alpine:arm64v8-3.11(runtime)
+  - arm32v7-latest: arm32v7/golang:1.14.1-alpine3.11(builder), lsiobase/alpine:arm32v7-3.11(runtime)
 
 ## Cloudreve
 
@@ -60,10 +73,12 @@ Volumes
 
 ### CAC
 
+> ⚠️注意：此教程仅在linux/amd64架构测试，如果您正在使用arm架构，部分参数请根据实际情况调整。
+
 前提条件
 
-- 已安装docker
-- 一个域名并解析到服务器，这里以`https://cloudreve.example.com`为例
+- 已安装docker，如果没有请执行`wget -qO- https://get.docker.com/ | bash`安装docker。
+- 一个域名并解析到运行Cloudreve的服务器，这里以`https://cloudreve.example.com`为例。
 
 Step1. 创建Network
 
@@ -181,11 +196,15 @@ docker run -d \
 Step7. 配置Cloudreve连接Aria2服务器
 
 - 以管理员身份登陆
-
-- 依次点击"参数设置 > 离线下载"
+- 点击"头像（右上角） > 管理面板"
+- 点击"参数设置 > 离线下载"
 
   - RPC服务器地址: http://aria2:6800/
   - RPC Secret: 参见`启动Aria2服务`中的`<SECRET>`
   - 临时下载地址: /downloads
-  
-  - 其他选项默认即可
+  - 其他选项按照默认值即可
+- 测试连接并保存
+
+## 有疑问？
+
+如果有任何问题可以在GitHub中创建一个新的issue或者通过邮件`a#nxw.name`与我取得联系。
