@@ -62,7 +62,7 @@ docker run -d \
 
 环境变量
 
-- PUID以及PGID的使用方法以及为什么使用参见: [Understanding PUID and PGID](https://docs.linuxserver.io/general/understanding-puid-and-pgid)
+- PUID以及PGID的获取方式详见`获取PUID和PGID`
 - `TZ`设置时区，默认值为`Asia/Shanghai`
 
 Volumes
@@ -140,7 +140,7 @@ docker run -d --name=aria2 \
 
 说明
 
-- PUID以及PGID的使用方法以及为什么使用参见: [Understanding PUID and PGID](https://docs.linuxserver.io/general/understanding-puid-and-pgid)
+- PUID以及PGID的获取方式详见`获取PUID和PGID`
 - `<SECRET>`: Aria2 RPC密码（你可以去[这里](https://miniwebtool.com/zh-cn/random-string-generator/)生成随机字符串），请记下该密码，在后续Cloudreve设置Aria2中会使用
 - `<PATH TO CONFIG>`: Aria2的配置文件夹，例如`/dockercnf/aria2/conf`
 - `<PATH TO TEMP>`: 临时下载文件夹，需要与Cloudreve的`/downloads`对应，例如`/dockercnf/aria2/temp`
@@ -186,7 +186,7 @@ docker run -d \
 
 - 首次启动后请执行`docker logs -f cloudreve`获取初始密码
 
-- PUID以及PGID的使用方法以及为什么使用参见: [Understanding PUID and PGID](https://docs.linuxserver.io/general/understanding-puid-and-pgid)
+- PUID以及PGID的获取方式详见`获取PUID和PGID`
 
 - `<PATH TO UPLOADS>`:上传目录, 例如`/sharedfolders`
 - `<PATH TO TEMP>`: 临时下载文件夹，需要与Aria的`/downloads`对应，例如`/dockercnf/aria2/temp`（如不需要离线下载功能`#1`可以删除）
@@ -204,6 +204,24 @@ Step7. 配置Cloudreve连接Aria2服务器
   - 临时下载地址: /downloads
   - 其他选项按照默认值即可
 - 测试连接并保存
+
+## 获取PUID和PGID
+
+为什么要使用PUID和PGID参见: [Understanding PUID and PGID](https://docs.linuxserver.io/general/understanding-puid-and-pgid)
+
+假设当前登陆用户为`root`，则执行
+
+```bash
+id root
+```
+
+就会得到类似于下面的一段代码
+
+```
+uid=1000(root) gid=1001(root)
+```
+
+则PUID填入1000，PGID填入1001
 
 ## 有疑问？
 

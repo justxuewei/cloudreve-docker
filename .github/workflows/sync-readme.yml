@@ -2,7 +2,7 @@ name: Publish Docker
 on: 
   push: 
     branches:
-      - test-sync-readme
+      - sync-readme
 jobs:
   sync-readme:
     runs-on: ubuntu-latest
