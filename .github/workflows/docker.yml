@@ -12,7 +12,7 @@ jobs:
       - name: DockerHub login
         env: 
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASS }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
       - name: Set up docker buildx
@@ -39,7 +39,7 @@ jobs:
       - name: DockerHub login
         env: 
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASS }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
       - name: Set up docker buildx
@@ -66,7 +66,7 @@ jobs:
       - name: DockerHub login
         env: 
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASS }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
       - name: Set up docker buildx
@@ -92,8 +92,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
       - name: Sync README.md
-        uses: meeDamian/sync-readme@v1.0.6
-        with:
-          user: xavierniu
-          pass: ${{ secrets.DOCKER_PASS }}
-          slug: xavierniu/cloudreve
+        uses: peter-evans/dockerhub-description@v2.1.0
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKERHUB_REPOSITORY: xavierniu/cloudreve
