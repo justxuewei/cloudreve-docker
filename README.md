@@ -157,6 +157,8 @@ max-connection-per-server=2
 force-save=false
 ```
 
+> 注意⚠️：由于Aria2本身设计缺陷，关闭`force-save`意味着某些正在下载的文件信息可能会丢失，一方面需要重新下载，另一方面可能会造成不必要的空间浪费（如果在不手动清理未下载完成的文件时），因此强烈建议尽量不重启Aria2容器。
+
 Step5. 预创建Cloudreve的数据库和配置文件，这里以`/dockercnf/cloudreve`为cloudreve配置目录
 
 ```bash
