@@ -56,16 +56,12 @@ docker run -d \
   xavierniu/cloudreve
 ```
 
-注意
+说明
 
 - 首次启动后请执行`docker logs -f cloudreve`获取初始密码
 
-环境变量
-
 - PUID以及PGID的获取方式详见`获取PUID和PGID`
 - `TZ`设置时区，默认值为`Asia/Shanghai`
-
-Volumes
 
 - `<PATH TO UPLOADS>`:上传目录
 - `<PATH TO conf.ini>`: 配置文件
@@ -78,7 +74,7 @@ Volumes
 前提条件
 
 - 已安装docker，如果没有请执行`wget -qO- https://get.docker.com/ | bash`安装docker。
-- 一个域名并解析到运行Cloudreve的服务器，这里以`https://cloudreve.example.com`为例。
+- 一个域名并解析到运行Cloudreve的服务器，这里以`cloudreve.example.com`为例。
 
 Step1. 创建Network
 
@@ -122,42 +118,28 @@ docker run -d \
 Step4. 启动Aria2服务（如不需要离线下载功能该步骤略过）
 
 ```bash
-docker run -d --name=aria2 \
-  -e PUID=1000 -e PGID=1000 \
-  -e TZ=Asia/Shanghai \
-  -e SECRET=<SECRET> \
-  -e CACHE=512M \
-  -e UpdateTracker=true \
-  -e QUIET=true \
-  -p 6881:6881 -p 6881:6881/udp \
-  -p 6800:6800 \ #1
-  --network my-network \
-  -v <PATH TO CONFIG>:/config \
-  -v <PATH TO TEMP>:/downloads \
-  --restart unless-stopped \
-  superng6/aria2
+docker run -d \
+    --name aria2 \
+    --restart unless-stopped \
+    --log-opt max-size=1m \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    -e RPC_SECRET=<SECRET> \
+    -p 6800:6800 \ #1
+    -p 6888:6888 -p 6888:6888/udp \
+    --network my-network \
+    -v <PATH TO CONFIG>:/config \
+    -v <PATH TO TEMP>:/downloads \
+    p3terx/aria2-pro
 ```
 
 说明
 
-- PUID以及PGID的获取方式详见`获取PUID和PGID`
-- `<SECRET>`: Aria2 RPC密码（你可以去[这里](https://miniwebtool.com/zh-cn/random-string-generator/)生成随机字符串），请记下该密码，在后续Cloudreve设置Aria2中会使用
-- `<PATH TO CONFIG>`: Aria2的配置文件夹，例如`/dockercnf/aria2/conf`
-- `<PATH TO TEMP>`: 临时下载文件夹，需要与Cloudreve的`/downloads`对应，例如`/dockercnf/aria2/temp`
-- 如果不需要外网访问Aria2可以将`#1`所在行删除
-
-需要额外编辑Aria2的配置文件以达到最好的效果（部分参数请根据自己实际情况调整），执行`vim /dockercnf/aria2/config/aria2.conf`
-
-```
-# 最大同时下载任务数
-max-concurrent-downloads=5
-# 同一服务器连接数
-max-connection-per-server=2
-# 注意：force-save设置为true可能会导致重启镜像后已完成的任务重复下载，最终占用存储空间
-force-save=false
-```
-
-> ⚠️注意：由于Aria2本身设计缺陷，关闭`force-save`意味着某些正在下载的文件信息可能会丢失，一方面需要重新下载，另一方面可能会造成不必要的空间浪费（如果在不手动清理未下载完成的文件时），因此强烈建议尽量不重启Aria2容器。
+- PUID以及PGID的获取方式详见`获取PUID和PGID`。
+- `<SECRET>`: Aria2 RPC密码（你可以去[这里](https://miniwebtool.com/zh-cn/random-string-generator/)生成随机字符串）。请记下该密码！在后续Cloudreve设置Aria2中会使用。
+- `<PATH TO CONFIG>`: Aria2的配置文件夹，例如`/dockercnf/aria2/conf`。
+- `<PATH TO TEMP>`: 临时下载文件夹，需要与Cloudreve的`/downloads`对应，例如`/dockercnf/aria2/temp`。
+- 如果不需要外网访问Aria2可以将`#1`所在行删除。
 
 Step5. 预创建Cloudreve的数据库和配置文件，这里以`/dockercnf/cloudreve`为cloudreve配置目录
 
