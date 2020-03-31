@@ -256,16 +256,17 @@ mkdir -p /dockercnf/cloudreve \
 下载环境文件
 
 ```bash
-wget -qO- https://raw.githubusercontent.com/xavier-niu/cloudreve-docker/master/env > .env
+wget -qO- https://raw.githubusercontent.com/xavier-niu/cloudreve-docker/master/docker-compose-env-example > .env
 ```
 
 根据需要对环境变量进行修改
 
-- CLOUDREVE_PUID & CLOUDREVE_PGID: PUID以及PGID的获取方式详见`获取PUID和PGID`
+- CLOUDREVE_PUID: **(Required)**PUID以及PGID的获取方式详见`获取PUID和PGID`
+- CLOUDREVE_PGID: **(Required)**
+- ARIA2_RPC_SECRET: **(Required)**Aria2 RPC密码（你可以去[这里](https://miniwebtool.com/zh-cn/random-string-generator/)生成随机字符串）。请记下该密码！在后续Cloudreve设置Aria2中会使用。
 - CADDY_CERTS_PATH: Caddy自动获取证书文件夹路径
 - CADDY_CADDYFILE_PATH: Caddyfile配置文件路径
 - TEMP_FOLDER_PATH: 离线下载临时文件夹路径
-- ARIA2_RPC_SECRET: (**Required**)Aria2 RPC密码（你可以去[这里](https://miniwebtool.com/zh-cn/random-string-generator/)生成随机字符串）
 - ARIA2_CONFIG_PATH: Aria2的配置文件夹路径
 - CLOUDREVE_UPLOAD_PATH: Cloudreve上传文件夹路径
 - CLOUDREVE_CONF_INI_PATH: Cloudreve配置文件路径
