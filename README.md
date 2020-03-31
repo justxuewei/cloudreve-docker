@@ -33,14 +33,37 @@ Cloudreve能助您以最低的成本快速搭建公私兼备的网盘系统。
 
 GitHub：https://github.com/cloudreve/Cloudreve
 
-## 运行
+## 开始
 
 运行模式
 
-- OC: 仅Cloudreve
-- CAC: Caddy反代+Aria2离线下载服务+Cloudreve
+- Docker Run方式运行
+  - OC: 仅Cloudreve
+  - CAC: Caddy反代+Aria2离线下载服务+Cloudreve
+- Docker Compose方式运行
+  - CAC: Caddy反代+Aria2离线下载服务+Cloudreve
 
-### OC
+### 获取PUID和PGID
+
+为什么要使用PUID和PGID参见: [Understanding PUID and PGID](https://docs.linuxserver.io/general/understanding-puid-and-pgid)
+
+假设当前登陆用户为`root`，则执行
+
+```bash
+id root
+```
+
+就会得到类似于下面的一段代码
+
+```
+uid=1000(root) gid=1001(root)
+```
+
+则PUID填入1000，PGID填入1001
+
+### Docker Run方式运行
+
+#### OC
 
 ```bash
 docker run -d \
@@ -67,22 +90,22 @@ docker run -d \
 - `<PATH TO conf.ini>`: 配置文件
 - ` <PATH TO cloudreve.db>`: 数据库文件
 
-### CAC
+#### CAC
 
 > ⚠️注意：此教程仅在linux/amd64架构测试，如果您正在使用arm架构，部分参数请根据实际情况调整。
 
-前提条件
+前提
 
 - 已安装docker，如果没有请执行`wget -qO- https://get.docker.com/ | bash`安装docker。
 - 一个域名并解析到运行Cloudreve的服务器，这里以`cloudreve.example.com`为例。
 
-Step1. 创建Network
+**Step1. 创建Network**
 
 ```bash
 docker network create my-network
 ```
 
-Step2. 创建Caddy配置文件
+**Step2. 创建Caddy配置文件**
 
 ```bash
 mkdir -p /dockercnf/caddy \
@@ -100,7 +123,7 @@ cloudreve.example.com {
 }
 ```
 
-Step3. 启动Caddy服务
+**Step3. 启动Caddy服务**
 
 ```bash
 docker run -d \
@@ -115,7 +138,7 @@ docker run -d \
   abiosoft/caddy
 ```
 
-Step4. 启动Aria2服务（如不需要离线下载功能该步骤略过）
+**Step4. 启动Aria2服务（如不需要离线下载功能该步骤略过）**
 
 ```bash
 docker run -d \
@@ -141,7 +164,7 @@ docker run -d \
 - `<PATH TO TEMP>`: 临时下载文件夹，需要与Cloudreve的`/downloads`对应，例如`/dockercnf/aria2/temp`。
 - 如果不需要外网访问Aria2可以将`#1`所在行删除。
 
-Step5. 预创建Cloudreve的数据库和配置文件，这里以`/dockercnf/cloudreve`为cloudreve配置目录
+**Step5. 预创建Cloudreve的数据库和配置文件，这里以`/dockercnf/cloudreve`为cloudreve配置目录**
 
 ```bash
 mkdir -p /dockercnf/cloudreve \
@@ -149,7 +172,7 @@ mkdir -p /dockercnf/cloudreve \
 	&& touch /dockercnf/cloudreve/cloudreve.db
 ```
 
-Step6. 启动Cloudreve
+**Step6. 启动Cloudreve**
 
 ```bash
 docker run -d \
@@ -177,7 +200,7 @@ docker run -d \
 - `<PATH TO conf.ini>`: 配置文件，如`/dockercnf/cloudreve/conf.ini`
 - ` <PATH TO cloudreve.db>`: 数据库文件，如`/dockercnf/cloudreve/cloudreve.db`
 
-Step7. 配置Cloudreve连接Aria2服务器
+**Step7. 配置Cloudreve连接Aria2服务器**
 
 - 以管理员身份登陆
 - 点击"头像（右上角） > 管理面板"
@@ -189,23 +212,88 @@ Step7. 配置Cloudreve连接Aria2服务器
   - 其他选项按照默认值即可
 - 测试连接并保存
 
-## 获取PUID和PGID
+### Docker Compose方式运行
 
-为什么要使用PUID和PGID参见: [Understanding PUID and PGID](https://docs.linuxserver.io/general/understanding-puid-and-pgid)
+> ⚠️注意：目前仅支持AMD64架构，原因：目前没有找到合适的适用于ARM的Caddy镜像，如有合适的镜像请与我联系。
 
-假设当前登陆用户为`root`，则执行
+前提
+
+- 已安装docker，如果没有请执行`wget -qO- https://get.docker.com/ | bash`安装docker。
+- 已安装docker compose，如果没有请参考[Install Docker Compose](https://docs.docker.com/compose/install/)。
+- 一个域名并解析到运行Cloudreve的服务器，这里以`cloudreve.example.com`为例。
+- 确保80和443端口没有被占用，如果您已经有服务器软件（如Nginx或Caddy），请考虑为原有服务器软件增加配置文件并删除docker compose配置文件中的caddy容器。
+
+**Step1. 预创建文件**
+
+Caddy配置文件
 
 ```bash
-id root
+mkdir -p /dockercnf/caddy \
+	&& vim /dockercnf/caddy/Caddyfile
 ```
 
-就会得到类似于下面的一段代码
+填入以下信息
 
 ```
-uid=1000(root) gid=1001(root)
+cloudreve.example.com {
+  tls admin@example.com
+  proxy / cloudreve:5212 {
+    transparent
+  }
+}
 ```
 
-则PUID填入1000，PGID填入1001
+Cloudreve配置文件及数据库文件
+
+```bash
+mkdir -p /dockercnf/cloudreve \
+	&& touch /dockercnf/cloudreve/conf.ini \
+	&& touch /dockercnf/cloudreve/cloudreve.db
+```
+
+**Step2. 下载环境文件以及Docker Compose文件**
+
+下载环境文件
+
+```bash
+wget -qO- https://raw.githubusercontent.com/xavier-niu/cloudreve-docker/master/env > .env
+```
+
+根据需要对环境变量进行修改
+
+- CLOUDREVE_PUID & CLOUDREVE_PGID: PUID以及PGID的获取方式详见`获取PUID和PGID`
+- CADDY_CERTS_PATH: Caddy自动获取证书文件夹路径
+- CADDY_CADDYFILE_PATH: Caddyfile配置文件路径
+- TEMP_FOLDER_PATH: 离线下载临时文件夹路径
+- ARIA2_RPC_SECRET: (**Required**)Aria2 RPC密码（你可以去[这里](https://miniwebtool.com/zh-cn/random-string-generator/)生成随机字符串）
+- ARIA2_CONFIG_PATH: Aria2的配置文件夹路径
+- CLOUDREVE_UPLOAD_PATH: Cloudreve上传文件夹路径
+- CLOUDREVE_CONF_INI_PATH: Cloudreve配置文件路径
+- CLOUDREVE_DB_PATH: Cloudreve数据库文件路径
+
+下载Docker Compose文件
+
+```bash
+wget -qO- https://raw.githubusercontent.com/xavier-niu/cloudreve-docker/master/docker-compose-amd64.yml > docker-compose.yml
+```
+
+**Step3. 启动Docker Compose**
+
+```bash
+docker-compose up -d
+```
+
+**Step4. 配置Cloudreve连接Aria2服务器**
+
+- 以管理员身份登陆
+- 点击"头像（右上角） > 管理面板"
+- 点击"参数设置 > 离线下载"
+
+  - RPC服务器地址: http://aria2:6800/
+  - RPC Secret: 参见`启动Aria2服务`中的`<SECRET>`
+  - 临时下载地址: /downloads
+  - 其他选项按照默认值即可
+- 测试连接并保存
 
 ## 有疑问？
 

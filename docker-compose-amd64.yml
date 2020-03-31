@@ -1,0 +1,54 @@
+version: '3'
+
+services: 
+    caddy: 
+        image: abiosoft/caddy
+        ports: 
+            - 80:80
+            - 443:443
+        environment: 
+            - ACME_AGREE=true
+            - CADDYPATH=/etc/caddycerts
+        volumes: 
+            - ${CADDY_CERTS_PATH}:/etc/caddycerts
+            - ${CADDY_CADDYFILE_PATH}:/etc/Caddyfile
+        networks: 
+            - cloudreve-network
+        restart: unless-stopped
+
+    aria2: 
+        image: p3terx/aria2-pro
+        logging: 
+            options: 
+                max-size: 1m
+        ports: 
+            - 6800:6800
+            - 6888:6888
+            - 6888:6888/udp
+        environment: 
+            - PUID=${CLOUDREVE_PUID}
+            - PGID=${CLOUDREVE_PGID}
+            - RPC_SECRET=${ARIA2_RPC_SECRET}
+        volumes: 
+            - ${ARIA2_CONFIG_PATH}:/config
+            - ${TEMP_FOLDER_PATH}:/downloads
+        networks: 
+            - cloudreve-network
+        restart: unless-stopped
+
+    cloudreve: 
+        image: xavierniu/cloudreve
+        environment: 
+            - PUID=${CLOUDREVE_PUID}
+            - PGID=${CLOUDREVE_PGID}
+        volumes: 
+            - ${CLOUDREVE_UPLOAD_PATH}:/cloudreve/uploads
+            - ${TEMP_FOLDER_PATH}:/downloads
+            - ${CLOUDREVE_CONF_INI_PATH}:/cloudreve/conf.ini
+            - ${CLOUDREVE_DB_PATH}:/cloudreve/cloudreve.db
+        networks: 
+            - cloudreve-network
+
+
+networks: 
+    cloudreve-network:
