@@ -265,8 +265,7 @@ wget -qO- https://raw.githubusercontent.com/xavier-niu/cloudreve-docker/master/d
   - CLOUDREVE_PUID: PUID的获取方式详见`获取PUID和PGID`
   - CLOUDREVE_PGID: PGID的获取方式详见`获取PUID和PGID`
   - ARIA2_RPC_SECRET: Aria2 RPC密码（你可以去[这里](https://miniwebtool.com/zh-cn/random-string-generator/)生成随机字符串）。请记下该密码！在后续Cloudreve设置Aria2中会使用。
-- 选填项（如无特殊需要不建议修改）
-  - CADDY_CERTS_PATH: Caddy自动获取证书文件夹路径
+- - CADDY_CERTS_PATH: Caddy自动获取证书文件夹路径
   - CADDY_CADDYFILE_PATH: Caddyfile配置文件路径
   - TEMP_FOLDER_PATH: 离线下载临时文件夹路径
   - ARIA2_CONFIG_PATH: Aria2的配置文件夹路径
@@ -296,9 +295,9 @@ docker-compose up -d
 - 点击"头像（右上角） > 管理面板"
 - 点击"参数设置 > 离线下载"
 
-  - RPC服务器地址: `http://aria2:6800/`
-  - RPC Secret: 你对`ARIA2_RPC_SECRET`设置的随机字符串
-  - 临时下载地址: `/downloads`
+  - RPC服务器地址: http://aria2:6800/
+  - RPC Secret: 参见`启动Aria2服务`中的`<SECRET>`
+  - 临时下载地址: /downloads
   - 其他选项按照默认值即可
 - 测试连接并保存
 
