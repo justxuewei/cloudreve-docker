@@ -34,11 +34,11 @@ COPY --from=builder /ProjectCloudreve/Cloudreve/cloudreve ./
 
 RUN echo ">>>>>> update dependencies" \
     && apk update \
-    && apk add --no-cache tzdata \
+    && apk add tzdata \
     && echo ">>>>>> set up timezone" \
     && cp /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
-    && ">>>>>> rename & grant exec permission for cloudreve binary file" \
+    && echo ">>>>>> rename & grant exec permission for cloudreve binary file" \
     && mv ./cloudreve ./main \
     && chmod +x ./main
 
