@@ -7,6 +7,7 @@
 - 基于最新的Cloudreve V3
 - 长期维护
 - 镜像体积小
+- 纯净安装，无多余组建
 - 支持多种架构
 - 安装简单
 - 内含详细的Cloudreve+Caddy+Aria2部署教程
@@ -19,7 +20,7 @@
 
 基于
 
-- cloudreve: 3.0.0-rc1
+- cloudreve: 3.0.0
 - base image
   - latest: golang:1.14.1-alpine3.11(builder), lsiobase/alpine:3.11(runtime)
   - arm64v8: arm64v8/golang:1.14.1-alpine3.11(builder), lsiobase/alpine:arm64v8-3.11(runtime)
@@ -301,6 +302,18 @@ docker-compose up -d
   - 临时下载地址: `/downloads`
   - 其他选项按照默认值即可
 - 测试连接并保存
+
+## 升级
+
+首先请暂停并移除正在运行的容器并从DockerHub拉取最新的镜像
+
+```bash
+docker stop cloudreve \
+  && docker rm cloudreve \
+  && docker pull xavierniu/cloudreve
+```
+
+重复上面的运行步骤再次启动容器即可。
 
 ## 有疑问？
 

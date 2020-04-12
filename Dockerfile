@@ -1,6 +1,6 @@
 FROM golang:1.14.1-alpine3.11 as builder
 
-ARG CLOUDREVE_VERSION="3.0.0-rc1"
+ARG CLOUDREVE_VERSION="3.0.0"
 
 WORKDIR /ProjectCloudreve
 
@@ -33,12 +33,12 @@ WORKDIR /cloudreve
 COPY --from=builder /ProjectCloudreve/Cloudreve/cloudreve ./
 
 RUN echo ">>>>>> update dependencies" \
-    && apk update && apk add tzdata \
+    && apk update \
+    && apk add tzdata \
     && echo ">>>>>> set up timezone" \
-    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && cp /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
-    && echo ">>>>>> clean up" \
-    && apk del tzdata \
+    && echo ">>>>>> rename & grant exec permission for cloudreve binary file" \
     && mv ./cloudreve ./main \
     && chmod +x ./main
 
