@@ -303,6 +303,18 @@ docker-compose up -d
   - 其他选项按照默认值即可
 - 测试连接并保存
 
+## 升级
+
+首先请暂停并移除正在运行的容器并从DockerHub拉取最新的镜像
+
+```bash
+docker stop cloudreve \
+  && docker rm cloudreve \
+  && docker pull xavierniu/cloudreve
+```
+
+重复上面的运行步骤再次启动容器即可。
+
 ## 有疑问？
 
 如果有任何问题可以在GitHub中创建一个新的issue或者通过邮件`a#nxw.name`与我取得联系。
