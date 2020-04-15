@@ -18,7 +18,7 @@ RUN cd ./Cloudreve \
     && statik -src=assets/build/ -include=*.html,*.js,*.json,*.css,*.png,*.svg,*.ico -f \
     && git checkout ${CLOUDREVE_VERSION} \
     && export COMMIT_SHA=$(git rev-parse --short HEAD) \
-    && go build -a -o cloudreve -ldflags " -X 'github.com/HFO4/cloudreve/pkg/conf.BackendVersion=$CLOUDREVE_VERSION' -X 'github.com/HFO4/cloudreve/pkg/conf.LastCommit=$COMMIT_SHA'"
+    && go build -a -o cloudreve-main -ldflags " -X 'github.com/HFO4/cloudreve/pkg/conf.BackendVersion=$CLOUDREVE_VERSION' -X 'github.com/HFO4/cloudreve/pkg/conf.LastCommit=$COMMIT_SHA'"
 
 FROM lsiobase/alpine:arm64v8-3.11
 
@@ -30,7 +30,7 @@ LABEL MAINTAINER="Xavier Niu"
 
 WORKDIR /cloudreve
 
-COPY --from=builder /ProjectCloudreve/Cloudreve/cloudreve ./
+COPY entrypoint.sh ./
 
 RUN echo ">>>>>> update dependencies" \
     && apk update \
@@ -38,12 +38,13 @@ RUN echo ">>>>>> update dependencies" \
     && echo ">>>>>> set up timezone" \
     && cp /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
-    && echo ">>>>>> rename & grant exec permission for cloudreve binary file" \
-    && mv ./cloudreve ./main \
-    && chmod +x ./main
+    && echo ">>>>>> fix entrypoint premission" \
+    && chmod +x entrypoint.sh
 
 VOLUME ["/cloudreve/uploads", "/downloads","/cloudreve/conf.ini", "/cloudreve/cloudreve.db"]
 
 EXPOSE 5212
 
-ENTRYPOINT ["./main"]
+COPY --from=builder /ProjectCloudreve/Cloudreve/cloudreve-main ./
+
+ENTRYPOINT ["./entrypoint.sh"]
