@@ -1,6 +1,6 @@
 # Cloudreve Docker
 
-此Docker镜像由Xavier Niu维护。
+![](https://img.shields.io/github/workflow/status/xavier-niu/cloudreve-docker/Publish%20Docker) ![](https://img.shields.io/badge/cloudreve-3.0.0-brightgreen) ![](https://img.shields.io/docker/image-size/xavierniu/cloudreve/latest) ![](https://img.shields.io/docker/pulls/xavierniu/cloudreve) ![](https://img.shields.io/badge/maintainer-xavierniu-lightgrey)
 
 优势
 
@@ -9,22 +9,11 @@
 - 镜像体积小
 - 纯净安装，无多余组件
 - 支持多种架构
-- 安装简单
+  - `xaiverniu/cloudreve:latest` for linux/amd64
+  - `xaiverniu/cloudreve:arm64v8` for linux/arm64
+  - `xaiverniu/cloudreve:arm32v7` for linux/arm/v7
+- 简易安装
 - 内含详细的Cloudreve+Caddy+Aria2部署教程
-
-支持架构
-
-- linux/amd64: `xaiverniu/cloudreve:latest`
-- linux/arm64: `xaiverniu/cloudreve:arm64v8`
-- linux/arm/v7: `xaiverniu/cloudreve:arm32v7`
-
-基于
-
-- cloudreve: 3.0.0
-- base image
-  - latest: golang:1.14.1-alpine3.11(builder), lsiobase/alpine:3.11(runtime)
-  - arm64v8: arm64v8/golang:1.14.1-alpine3.11(builder), lsiobase/alpine:arm64v8-3.11(runtime)
-  - arm32v7: arm32v7/golang:1.14.1-alpine3.11(builder), lsiobase/alpine:arm32v7-3.11(runtime)
 
 ## Cloudreve
 
