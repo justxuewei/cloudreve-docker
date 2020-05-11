@@ -19,7 +19,7 @@ jobs:
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
         with:
-          version: latest
+          buildx-version: latest
       - name: Build Dockerfile and push to DockerHub
         run: |
           REPO_NAME="xavierniu/cloudreve"
@@ -43,7 +43,7 @@ jobs:
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
         with:
-          version: latest
+          buildx-version: latest
       - name: Build Dockerfile and push to DockerHub
         run: |
           REPO_NAME="xavierniu/cloudreve"
@@ -67,7 +67,7 @@ jobs:
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
         with:
-          version: latest
+          buildx-version: latest
       - name: Build Dockerfile and push to DockerHub
         run: |
           REPO_NAME="xavierniu/cloudreve"

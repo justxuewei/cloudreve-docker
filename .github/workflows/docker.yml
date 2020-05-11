@@ -19,7 +19,7 @@ jobs:
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
         with:
-          version: latest
+          buildx-version: latest
       - name: Get tag name
         id: tagName
         uses: olegtarasov/get-tag@v2
@@ -46,7 +46,7 @@ jobs:
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
         with:
-          version: latest
+          buildx-version: latest
       - name: Get tag name
         id: tagName
         uses: olegtarasov/get-tag@v2
@@ -73,7 +73,7 @@ jobs:
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
         with:
-          version: latest
+          buildx-version: latest
       - name: Get tag name
         id: tagName
         uses: olegtarasov/get-tag@v2
