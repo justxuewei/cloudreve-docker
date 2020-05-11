@@ -41,7 +41,7 @@ RUN echo ">>>>>> update dependencies" \
     && echo ">>>>>> fix entrypoint premission" \
     && chmod +x entrypoint.sh
 
-VOLUME ["/cloudreve/uploads", "/downloads","/cloudreve/conf.ini", "/cloudreve/cloudreve.db"]
+VOLUME ["/cloudreve/uploads", "/downloads"]
 
 EXPOSE 5212
 
