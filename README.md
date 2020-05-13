@@ -1,6 +1,6 @@
 # Cloudreve Docker
 
-![](https://img.shields.io/github/workflow/status/xavier-niu/cloudreve-docker/Publish Docker)![](https://img.shields.io/badge/cloudreve-3.0.0-brightgreen)![](https://img.shields.io/docker/image-size/xavierniu/cloudreve/latest)![](https://img.shields.io/docker/pulls/xavierniu/cloudreve)![](https://img.shields.io/badge/maintainer-xavierniu-lightgrey)
+![](https://img.shields.io/github/workflow/status/xavier-niu/cloudreve-docker/Publish%20Docker) ![](https://img.shields.io/badge/cloudreve-3.0.0-brightgreen) ![](https://img.shields.io/docker/image-size/xavierniu/cloudreve/latest) ![](https://img.shields.io/docker/pulls/xavierniu/cloudreve) ![](https://img.shields.io/badge/maintainer-xavierniu-lightgrey)
 
 优势
 
@@ -55,6 +55,16 @@ uid=1000(root) gid=1001(root)
 
 #### OC
 
+预创建Cloudreve的数据库和配置文件，这里以`/dockercnf/cloudreve`为cloudreve配置目录。
+
+```bash
+mkdir -p /dockercnf/cloudreve \
+	&& touch /dockercnf/cloudreve/conf.ini \
+	&& touch /dockercnf/cloudreve/cloudreve.db
+```
+
+启动容器
+
 ```bash
 docker run -d \
   --name cloudreve \
@@ -72,13 +82,11 @@ docker run -d \
 说明
 
 - 首次启动后请执行`docker logs -f cloudreve`获取初始密码
-
 - PUID以及PGID的获取方式详见`获取PUID和PGID`
 - `TZ`设置时区，默认值为`Asia/Shanghai`
-
-- `<PATH TO UPLOADS>`:上传目录
-- `<PATH TO conf.ini>`: 配置文件
-- ` <PATH TO cloudreve.db>`: 数据库文件
+- `<PATH TO UPLOADS>`:上传目录, 例如`/sharedfolders`
+- `<PATH TO conf.ini>`: 配置文件，如`/dockercnf/cloudreve/conf.ini`（注意这里是挂载的文件，而非文件夹）
+- ` <PATH TO cloudreve.db>`: 数据库文件，如`/dockercnf/cloudreve/cloudreve.db`（注意这里是挂载的文件，而非文件夹）
 
 #### CAC
 
