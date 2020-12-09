@@ -25,3 +25,4 @@ ARIA2_CONFIG_PATH=/dockercnf/aria2/conf
 CLOUDREVE_UPLOAD_PATH=/sharedfolders
 CLOUDREVE_CONF_INI_PATH=/dockercnf/cloudreve/conf.ini
 CLOUDREVE_DB_PATH=/dockercnf/cloudreve/cloudreve.db
+CLOUDREVE_AVATAR_PATH:/cloudreve/avatar
