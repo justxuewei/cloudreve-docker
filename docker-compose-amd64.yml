@@ -46,6 +46,7 @@ services:
             - ${TEMP_FOLDER_PATH}:/downloads
             - ${CLOUDREVE_CONF_INI_PATH}:/cloudreve/conf.ini
             - ${CLOUDREVE_DB_PATH}:/cloudreve/cloudreve.db
+            - ${CLOUDREVE_AVATAR_PATH}:/cloudreve/avatar
         networks: 
             - cloudreve-network
 

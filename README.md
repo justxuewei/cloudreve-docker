@@ -76,6 +76,7 @@ docker run -d \
   -v <PATH TO UPLOADS>:/cloudreve/uploads \
   -v <PATH TO conf.ini>:/cloudreve/conf.ini \
   -v <PATH TO cloudreve.db>:/cloudreve/cloudreve.db \
+  -v <PATH TO avatar>:/cloudreve/avatar \
   xavierniu/cloudreve
 ```
 
@@ -87,6 +88,7 @@ docker run -d \
 - `<PATH TO UPLOADS>`:上传目录, 例如`/sharedfolders`
 - `<PATH TO conf.ini>`: 配置文件，如`/dockercnf/cloudreve/conf.ini`（注意这里是挂载的文件，而非文件夹）
 - ` <PATH TO cloudreve.db>`: 数据库文件，如`/dockercnf/cloudreve/cloudreve.db`（注意这里是挂载的文件，而非文件夹）
+- ` <PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
 
 #### CAC
 
@@ -184,6 +186,7 @@ docker run -d \
   -v <PATH TO TEMP>:/downloads \ #1
   -v <PATH TO conf.ini>:/cloudreve/conf.ini \
   -v <PATH TO cloudreve.db>:/cloudreve/cloudreve.db \
+  -v <PATH TO avatar>:/cloudreve/avatar \ 
   xavierniu/cloudreve
 ```
 
@@ -197,6 +200,7 @@ docker run -d \
 - `<PATH TO TEMP>`: 临时下载文件夹，需要与Aria的`/downloads`对应，例如`/dockercnf/aria2/temp`（如不需要离线下载功能`#1`可以删除）
 - `<PATH TO conf.ini>`: 配置文件，如`/dockercnf/cloudreve/conf.ini`
 - ` <PATH TO cloudreve.db>`: 数据库文件，如`/dockercnf/cloudreve/cloudreve.db`
+- ` <PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
 
 **Step7. 配置Cloudreve连接Aria2服务器**
 
