@@ -22,7 +22,7 @@ jobs:
           buildx-version: latest
       - name: Get tag name
         id: tagName
-        uses: olittle-core-labs/get-git-tag@v3.0.1
+        uses: olittle-core-labs/get-git-tag@v3.0.2
       - name: Build Dockerfile and push to DockerHub
         run: |
           REPO_NAME="xavierniu/cloudreve"
@@ -49,7 +49,7 @@ jobs:
           buildx-version: latest
       - name: Get tag name
         id: tagName
-        uses: little-core-labs/get-git-tag@v3.0.1
+        uses: little-core-labs/get-git-tag@v3.0.2
       - name: Build Dockerfile and push to DockerHub
         run: |
           REPO_NAME="xavierniu/cloudreve"
@@ -76,7 +76,7 @@ jobs:
           buildx-version: latest
       - name: Get tag name
         id: tagName
-        uses: little-core-labs/get-git-tag@v3.0.1
+        uses: little-core-labs/get-git-tag@v3.0.2
       - name: Build Dockerfile and push to DockerHub
         run: |
           REPO_NAME="xavierniu/cloudreve"
