@@ -9,9 +9,9 @@
 - 镜像体积小
 - 纯净安装，无多余组件
 - 支持多种架构
-  - `xaiverniu/cloudreve:latest` for linux/amd64
-  - `xaiverniu/cloudreve:arm64v8` for linux/arm64
-  - `xaiverniu/cloudreve:arm32v7` for linux/arm/v7
+  - `xavierniu/cloudreve:latest` for linux/amd64
+  - `xavierniu/cloudreve:arm64v8` for linux/arm64
+  - `xavierniu/cloudreve:arm32v7` for linux/arm/v7
 - 简易安装
 - 内含详细的Cloudreve+Caddy+Aria2部署教程
 
@@ -27,11 +27,13 @@ GitHub：https://github.com/cloudreve/Cloudreve
 
 运行模式
 
+> ⚠️注意：由于Caddy v1已停止维护，故支持文档将原有CAC模式变更为NAC模式，即使用Nginx作为反代服务器。目前这项改变尚处于测试阶段，还无法保证其运行的正确性。
+
 - Docker Run方式运行
   - OC: 仅Cloudreve
-  - CAC: Caddy反代+Aria2离线下载服务+Cloudreve
+  - NAC: Nginx反代+Aria2离线下载服务+Cloudreve
 - Docker Compose方式运行
-  - CAC: Caddy反代+Aria2离线下载服务+Cloudreve
+  - NAC: Nginx反代+Aria2离线下载服务+Cloudreve
 
 ### 获取PUID和PGID
 
@@ -105,20 +107,22 @@ docker run -d \
 docker network create my-network
 ```
 
-**Step2. 创建Caddy配置文件**
+**Step2. 创建Nginx配置文件**
 
 ```bash
-mkdir -p /dockercnf/caddy \
-	&& vim /dockercnf/caddy/Caddyfile
+mkdir -p /dockercnf/nginx/conf.d \
+  && mkdir -p /dockercnf/nginx/ssl \
+	&& vim /dockercnf/nginx/conf.d/cloudreve.conf
 ```
 
 填入以下信息
 
 ```
-cloudreve.example.com {
-  tls admin@example.com
-  proxy / cloudreve:5212 {
-    transparent
+server {
+  listen 80;
+  location / {
+    proxy_pass http://cloudreve:5212;
+    proxy_set_header Host $host;
   }
 }
 ```
@@ -127,15 +131,15 @@ cloudreve.example.com {
 
 ```bash
 docker run -d \
-  --name caddy \
+  --name nginx \
   -e "ACME_AGREE=true" \
   -e "CADDYPATH=/etc/caddycerts" \
-  -v /dockercnf/caddy/certs:/etc/caddycerts \
-  -v /dockercnf/caddy/Caddyfile:/etc/Caddyfile \
+  -v /dockercnf/nginx/conf.d:/etc/nginx/conf.d \
+  -v /dockercnf/nginx/ssl:/etc/nginx/ssl \
   --network my-network \
   -p 80:80 -p 443:443 \
   --restart unless-stopped \
-  abiosoft/caddy
+  nginx:alpine
 ```
 
 **Step4. 启动Aria2服务（如不需要离线下载功能该步骤略过）**
@@ -227,20 +231,22 @@ docker run -d \
 
 **Step1. 预创建文件**
 
-Caddy配置文件
+Nginx配置文件
 
 ```bash
-mkdir -p /dockercnf/caddy \
-	&& vim /dockercnf/caddy/Caddyfile
+mkdir -p /dockercnf/nginx/conf.d \
+  && mkdir -p /dockercnf/nginx/ssl \
+	&& vim /dockercnf/nginx/conf.d/cloudreve.conf
 ```
 
 填入以下信息
 
 ```
-cloudreve.example.com {
-  tls admin@example.com
-  proxy / cloudreve:5212 {
-    transparent
+server {
+  listen 80;
+  location / {
+    proxy_pass http://cloudreve:5212;
+    proxy_set_header Host $host;
   }
 }
 ```
@@ -268,8 +274,6 @@ wget -qO- https://raw.githubusercontent.com/xavier-niu/cloudreve-docker/master/d
   - CLOUDREVE_PGID: PGID的获取方式详见`获取PUID和PGID`
   - ARIA2_RPC_SECRET: Aria2 RPC密码（你可以去[这里](https://miniwebtool.com/zh-cn/random-string-generator/)生成随机字符串）。请记下该密码！在后续Cloudreve设置Aria2中会使用。
 - 选填项（如无特殊需要不建议修改）
-  - CADDY_CERTS_PATH: Caddy自动获取证书文件夹路径
-  - CADDY_CADDYFILE_PATH: Caddyfile配置文件路径
   - TEMP_FOLDER_PATH: 离线下载临时文件夹路径
   - ARIA2_CONFIG_PATH: Aria2的配置文件夹路径
   - CLOUDREVE_UPLOAD_PATH: Cloudreve上传文件夹路径

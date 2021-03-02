@@ -2,16 +2,13 @@ version: '3'
 
 services: 
     caddy: 
-        image: abiosoft/caddy
+        image: nginx:alpine
         ports: 
             - 80:80
             - 443:443
-        environment: 
-            - ACME_AGREE=true
-            - CADDYPATH=/etc/caddycerts
         volumes: 
-            - ${CADDY_CERTS_PATH}:/etc/caddycerts
-            - ${CADDY_CADDYFILE_PATH}:/etc/Caddyfile
+            - /dockercnf/nginx/conf.d:/etc/nginx/conf.d
+            - /dockercnf/nginx/ssl:/etc/nginx/ssl
         networks: 
             - cloudreve-network
         restart: unless-stopped
