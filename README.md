@@ -27,7 +27,7 @@ GitHub：https://github.com/cloudreve/Cloudreve
 
 运行模式
 
-> ⚠️注意：由于Caddy v1已停止维护，故支持文档将原有CAC模式变更为NAC模式，即使用Nginx作为反代服务器。目前这项改变尚处于测试阶段，还无法保证NAC模式（包括Docker Run和Docker Compose）配置的正确性。
+> ⚠️注意：由于Caddy v1已停止维护，故支持文档将原有CAC模式变更为NAC模式，即使用Nginx作为反代服务器。目前这项改变尚处于测试阶段，还无法保证NAC模式和Docker Compose方式配置的正确性。
 
 - [Docker Run方式运行](#docker-run方式运行)
   - [OC: 仅Cloudreve](#oc)
