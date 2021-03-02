@@ -29,11 +29,10 @@ GitHub：https://github.com/cloudreve/Cloudreve
 
 > ⚠️注意：由于Caddy v1已停止维护，故支持文档将原有CAC模式变更为NAC模式，即使用Nginx作为反代服务器。目前这项改变尚处于测试阶段，还无法保证其运行的正确性。
 
-- Docker Run方式运行
-  - OC: 仅Cloudreve
-  - NAC: Nginx反代+Aria2离线下载服务+Cloudreve
-- Docker Compose方式运行
-  - NAC: Nginx反代+Aria2离线下载服务+Cloudreve
+- [Docker Run方式运行](#docker-run方式运行)
+  - [OC: 仅Cloudreve](#oc)
+  - [NAC: Nginx反代+Aria2离线下载服务+Cloudreve](#nac)
+- [Docker Compose方式运行: Nginx反代+Aria2离线下载服务+Cloudreve](#docker-compose方式运行)
 
 ### 获取PUID和PGID
 
@@ -92,7 +91,7 @@ docker run -d \
 - ` <PATH TO cloudreve.db>`: 数据库文件，如`/dockercnf/cloudreve/cloudreve.db`（注意这里是挂载的文件，而非文件夹）
 - ` <PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
 
-#### CAC
+#### NAC
 
 > ⚠️注意：此教程仅在linux/amd64架构测试，如果您正在使用arm架构，部分参数请根据实际情况调整。
 
