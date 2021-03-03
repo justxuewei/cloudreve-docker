@@ -13,7 +13,7 @@
   - `xavierniu/cloudreve:arm64v8` for linux/arm64
   - `xavierniu/cloudreve:arm32v7` for linux/arm/v7
 - 简易安装
-- 内含详细的Cloudreve+Caddy+Aria2部署教程
+- 内含详细的Cloudreve+Nginx+Aria2部署教程
 
 ## Cloudreve
 
@@ -27,7 +27,9 @@ GitHub：https://github.com/cloudreve/Cloudreve
 
 运行模式
 
-> ⚠️注意：由于Caddy v1已停止维护，故支持文档将原有CAC模式变更为NAC模式，即使用Nginx作为反代服务器。目前这项改变尚处于测试阶段，还无法保证NAC模式和Docker Compose方式配置的正确性。
+> ⚠️注意1：由于Caddy v1已停止维护，故支持文档将原有CAC模式变更为NAC模式，即使用Nginx作为反代服务器。目前这项改变尚处于测试阶段，还无法保证NAC模式和Docker Compose方式配置的正确性。如果有任何疑问，请直接提出issue。
+> 
+> ⚠️注意2：本教程Nginx配置默认不开启TLS(HTTPS)。如果有相关需求，请将证书保存至Nginx的`ssl`目录并修改Nginx的配置文件。这部分配置工作不在本教程覆盖范围内，因此不会为此提供支持。
 
 - [Docker Run方式运行](#docker-run方式运行)
   - [OC: 仅Cloudreve](#oc)
@@ -126,7 +128,7 @@ server {
 }
 ```
 
-**Step3. 启动Caddy服务**
+**Step3. 启动Nginx服务**
 
 ```bash
 docker run -d \
