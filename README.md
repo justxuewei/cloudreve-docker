@@ -133,8 +133,6 @@ server {
 ```bash
 docker run -d \
   --name nginx \
-  -e "ACME_AGREE=true" \
-  -e "CADDYPATH=/etc/caddycerts" \
   -v /dockercnf/nginx/conf.d:/etc/nginx/conf.d \
   -v /dockercnf/nginx/ssl:/etc/nginx/ssl \
   --network my-network \
