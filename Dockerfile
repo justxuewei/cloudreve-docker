@@ -1,4 +1,4 @@
-FROM golang:1.14.1-alpine3.11 as builder
+FROM golang as builder
 
 ARG CLOUDREVE_VERSION="3.2.1"
 
@@ -20,7 +20,7 @@ RUN cd ./Cloudreve \
     && export COMMIT_SHA=$(git rev-parse --short HEAD) \
     && go build -a -o cloudreve-main -ldflags " -X 'github.com/HFO4/cloudreve/pkg/conf.BackendVersion=$CLOUDREVE_VERSION' -X 'github.com/HFO4/cloudreve/pkg/conf.LastCommit=$COMMIT_SHA'"
 
-FROM lsiobase/alpine:3.11
+FROM lsiobase/alpine
 
 ENV PUID=1000
 ENV PGID=1000
