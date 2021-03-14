@@ -26,7 +26,7 @@ jobs:
           platforms: all
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@maste
+        uses: docker/setup-buildx-action@master
       - name: Login to DockerHub
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v1
