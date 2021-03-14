@@ -17,7 +17,7 @@ jobs:
           SHORTREF=${GITHUB_SHA::8}
           TAGS="${DOCKER_IMAGE}:latest,${DOCKER_IMAGE}:${SHORTREF}"
           if [[ $GITHUB_REF == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/v}
+            VERSION=${GITHUB_REF##*/}
             TAGS="$TAGS,${DOCKER_IMAGE}:${VERSION}"
           fi
           # set output for tags and docker image
