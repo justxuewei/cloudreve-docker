@@ -20,7 +20,7 @@ RUN cd ./Cloudreve \
     && export COMMIT_SHA=$(git rev-parse --short HEAD) \
     && go build -a -o cloudreve-main -ldflags " -X 'github.com/HFO4/cloudreve/pkg/conf.BackendVersion=$CLOUDREVE_VERSION' -X 'github.com/HFO4/cloudreve/pkg/conf.LastCommit=$COMMIT_SHA'"
 
-FROM lsiobase/alpine
+FROM lsiobase/alpine:3.13
 
 ENV PUID=1000
 ENV PGID=1000
