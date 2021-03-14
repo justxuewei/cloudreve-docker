@@ -7,7 +7,7 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
-    step:
+    steps:
       - steps:
       - name: Checkout
         uses: actions/checkout@master
