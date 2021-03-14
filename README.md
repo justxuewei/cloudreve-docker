@@ -8,10 +8,7 @@
 - 长期维护
 - 镜像体积小
 - 纯净安装，无多余组件
-- 支持多种架构
-  - `xavierniu/cloudreve:latest` for linux/amd64
-  - `xavierniu/cloudreve:arm64v8` for linux/arm64
-  - `xavierniu/cloudreve:arm32v7` for linux/arm/v7
+- 支持多种架构(amd64, arm64, arm32/v7)
 - 简易安装
 - 内含详细的Cloudreve+Nginx+Aria2部署教程
 
@@ -31,10 +28,16 @@ GitHub：https://github.com/cloudreve/Cloudreve
 > 
 > ⚠️注意2：本教程Nginx配置默认不开启TLS(HTTPS)。如果有相关需求，请将证书保存至Nginx的`ssl`目录并修改Nginx的配置文件。这部分配置工作不在本教程覆盖范围内，因此不会为此提供支持。
 
-- [Docker Run方式运行](#docker-run方式运行)
-  - [OC: 仅Cloudreve](#oc)
-  - [NAC: Nginx反代+Aria2离线下载服务+Cloudreve](#nac)
-- [Docker Compose方式运行: Nginx反代+Aria2离线下载服务+Cloudreve](#docker-compose方式运行)
+- [Cloudreve Docker](#cloudreve-docker)
+  - [Cloudreve](#cloudreve)
+  - [开始](#开始)
+    - [获取PUID和PGID](#获取puid和pgid)
+    - [Docker Run方式运行](#docker-run方式运行)
+      - [OC](#oc)
+      - [NAC](#nac)
+    - [Docker Compose方式运行](#docker-compose方式运行)
+  - [升级](#升级)
+  - [有疑问？](#有疑问)
 
 ### 获取PUID和PGID
 
