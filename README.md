@@ -36,6 +36,7 @@ GitHub：https://github.com/cloudreve/Cloudreve
       - [OC](#oc)
       - [NAC](#nac)
     - [Docker Compose方式运行](#docker-compose方式运行)
+      - [使用Traefik作为Web服务器](#使用Traefik作为Web服务器)
   - [升级](#升级)
   - [有疑问？](#有疑问)
 
@@ -309,6 +310,12 @@ docker-compose up -d
   - 临时下载地址: `/downloads`
   - 其他选项按照默认值即可
 - 测试连接并保存
+
+#### 使用Traefik作为Web服务器
+
+> Traefik 是新一代的Web服务器，支持 docker 的服务发现，已经自动HTTPS证书申请，只需修改相应的服务的 label 即可实现服务的反向代理、简化了配置
+
+相关配置请参阅 [https://github.com/expoli/docker-compose-files](https://github.com/expoli/docker-compose-files)，Cloudreve 使用 **traefik + cloudreve + mysql + redis** 实现。
 
 ## 升级
 
