@@ -1,6 +1,6 @@
 FROM golang:1.16-alpine as builder
 
-ARG CLOUDREVE_VERSION="3.3.0"
+ARG CLOUDREVE_VERSION="3.3.1"
 
 WORKDIR /ProjectCloudreve
 
