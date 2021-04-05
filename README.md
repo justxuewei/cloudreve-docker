@@ -2,6 +2,19 @@
 
 ![](https://img.shields.io/github/workflow/status/xavier-niu/cloudreve-docker/Publish%20Docker) ![](https://img.shields.io/badge/cloudreve-3.3.1-brightgreen) ![](https://img.shields.io/docker/image-size/xavierniu/cloudreve/latest) ![](https://img.shields.io/docker/pulls/xavierniu/cloudreve) ![](https://img.shields.io/badge/maintainer-xavierniu-lightgrey)
 
+- [Cloudreve Docker](#cloudreve-docker)
+  - [Cloudreve](#cloudreve)
+  - [开始](#开始)
+    - [获取PUID和PGID](#获取puid和pgid)
+    - [Docker Run方式运行](#docker-run方式运行)
+      - [OC](#oc)
+      - [NAC](#nac)
+    - [Docker Compose方式运行](#docker-compose方式运行)
+      - [使用Nginx作为服务器](#使用nginx作为服务器)
+      - [使用Traefik作为服务器](#使用traefik作为服务器)
+  - [升级](#升级)
+  - [有疑问？](#有疑问)
+
 优势
 
 - 基于最新的Cloudreve V3
@@ -24,22 +37,7 @@ GitHub：https://github.com/cloudreve/Cloudreve
 
 运行模式
 
-> ⚠️注意1：由于Caddy v1已停止维护，故支持文档将原有CAC模式变更为NAC模式，即使用Nginx作为反代服务器。目前这项改变尚处于测试阶段，还无法保证NAC模式和Docker Compose方式配置的正确性。如果有任何疑问，请直接提出issue。
-> 
-> ⚠️注意2：本教程Nginx配置默认不开启TLS(HTTPS)。如果有相关需求，请将证书保存至Nginx的`ssl`目录并修改Nginx的配置文件。这部分配置工作不在本教程覆盖范围内，因此不会为此提供支持。
-
-- [Cloudreve Docker](#cloudreve-docker)
-  - [Cloudreve](#cloudreve)
-  - [开始](#开始)
-    - [获取PUID和PGID](#获取puid和pgid)
-    - [Docker Run方式运行](#docker-run方式运行)
-      - [OC](#oc)
-      - [NAC](#nac)
-    - [Docker Compose方式运行](#docker-compose方式运行)
-      - [使用Nginx作为服务器](#使用nginx作为服务器)
-      - [使用Traefik作为服务器](#使用traefik作为服务器)
-  - [升级](#升级)
-  - [有疑问？](#有疑问)
+> ⚠️注意：本教程Nginx配置默认不开启TLS(HTTPS)。如果有相关需求，请将证书保存至Nginx的`ssl`目录并修改Nginx的配置文件。这部分配置工作不在本教程覆盖范围内，因此不会为此提供支持。
 
 ### 获取PUID和PGID
 
@@ -60,6 +58,11 @@ uid=1000(root) gid=1001(root)
 则PUID填入1000，PGID填入1001
 
 ### Docker Run方式运行
+
+目前有两种运行方式可供选择
+
+- OC模式：仅启动Cloudreve
+- NAC模式：启动Cloudreve，同时使用Nginx作为反向代理服务器以及Aria2作为离线下载服务（可选）
 
 #### OC
 
