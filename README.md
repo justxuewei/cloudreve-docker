@@ -2,7 +2,9 @@
 
 ![](https://img.shields.io/github/workflow/status/xavier-niu/cloudreve-docker/Publish%20Docker) ![](https://img.shields.io/badge/cloudreve-3.3.1-brightgreen) ![](https://img.shields.io/docker/image-size/xavierniu/cloudreve/latest) ![](https://img.shields.io/docker/pulls/xavierniu/cloudreve) ![](https://img.shields.io/badge/maintainer-xavierniu-lightgrey)
 
-> 请注意：最新版本中取消了预创建`conf.ini`和`cloudreve.db`过程，所以需要更新容器运行命令，老版本运行命令最大支持版本为`v3.3.1`。
+> [!!!!]版本低于`v3.3.1`的更新提示：
+> 
+> 最新版本中取消了预创建`conf.ini`和`cloudreve.db`过程，因此版本更新牵扯到数据库的路径更新。在更新到最新版本之前请备份旧版本的`cloudreve.db`文件，在使用新的命令运行之后，需要将原有的`cloudreve.db`文件拷贝至新的`/cloudreve/db`映射的文件夹中。
 
 - [Cloudreve Docker](#cloudreve-docker)
   - [Cloudreve](#cloudreve)
