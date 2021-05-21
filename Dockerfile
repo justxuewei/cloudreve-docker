@@ -32,6 +32,8 @@ WORKDIR /cloudreve
 
 COPY entrypoint.sh ./
 
+VOLUME ["/cloudreve/uploads", "/downloads", "/cloudreve/avatar", "/cloudreve/config", "/cloudreve/db"]
+
 RUN echo ">>>>>> update dependencies" \
     && apk update \
     && apk add tzdata \
@@ -41,10 +43,10 @@ RUN echo ">>>>>> update dependencies" \
     && echo ">>>>>> fix entrypoint premission" \
     && chmod +x entrypoint.sh
 
-VOLUME ["/cloudreve/uploads", "/downloads", "/cloudreve/avatar", "/cloudreve/config", "/cloudreve/db"]
-
 EXPOSE 5212
 
 COPY --from=builder /ProjectCloudreve/Cloudreve/cloudreve-main ./
+
+COPY conf.ini ./config/
 
 ENTRYPOINT ["./entrypoint.sh"]
