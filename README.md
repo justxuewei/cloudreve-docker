@@ -2,6 +2,8 @@
 
 ![](https://img.shields.io/github/workflow/status/xavier-niu/cloudreve-docker/Publish%20Docker) ![](https://img.shields.io/badge/cloudreve-3.3.1-brightgreen) ![](https://img.shields.io/docker/image-size/xavierniu/cloudreve/latest) ![](https://img.shields.io/docker/pulls/xavierniu/cloudreve) ![](https://img.shields.io/badge/maintainer-xavierniu-lightgrey)
 
+> 请注意：最新版本中取消了预创建`conf.ini`和`cloudreve.db`过程，所以需要更新容器运行命令，老版本运行命令最大支持版本为`v3.3.1`。
+
 - [Cloudreve Docker](#cloudreve-docker)
   - [Cloudreve](#cloudreve)
   - [开始](#开始)
@@ -66,14 +68,6 @@ uid=1000(root) gid=1001(root)
 
 #### OC
 
-预创建Cloudreve的数据库和配置文件，这里以`/dockercnf/cloudreve`为cloudreve配置目录。
-
-```bash
-mkdir -p /dockercnf/cloudreve \
-	&& touch /dockercnf/cloudreve/conf.ini \
-	&& touch /dockercnf/cloudreve/cloudreve.db
-```
-
 启动容器
 
 ```bash
@@ -84,9 +78,9 @@ docker run -d \
   -e TZ="Asia/Shanghai" \ # optional
   -p 5212:5212 \ 
   --restart=unless-stopped \
-  -v <PATH TO UPLOADS>:/cloudreve/uploads \
-  -v <PATH TO conf.ini>:/cloudreve/conf.ini \
-  -v <PATH TO cloudreve.db>:/cloudreve/cloudreve.db \
+  -v <PATH TO uploads>:/cloudreve/uploads \
+  -v <PATH TO config>:/cloudreve/config \
+  -v <PATH TO db>:/cloudreve/db \
   -v <PATH TO avatar>:/cloudreve/avatar \
   xavierniu/cloudreve
 ```
@@ -97,9 +91,9 @@ docker run -d \
 - PUID以及PGID的获取方式详见`获取PUID和PGID`
 - `TZ`设置时区，默认值为`Asia/Shanghai`
 - `<PATH TO UPLOADS>`:上传目录, 例如`/sharedfolders`
-- `<PATH TO conf.ini>`: 配置文件，如`/dockercnf/cloudreve/conf.ini`（注意这里是挂载的文件，而非文件夹）
-- ` <PATH TO cloudreve.db>`: 数据库文件，如`/dockercnf/cloudreve/cloudreve.db`（注意这里是挂载的文件，而非文件夹）
-- ` <PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
+- `<PATH TO config>`: 配置文件，如`/dockercnf/cloudreve/config`
+- `<PATH TO db`: 数据库文件，如`/dockercnf/cloudreve/db`
+- `<PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
 
 #### NAC
 
@@ -175,15 +169,7 @@ docker run -d \
 - `<PATH TO TEMP>`: 临时下载文件夹，需要与Cloudreve的`/downloads`对应，例如`/dockercnf/aria2/temp`。
 - 如果不需要外网访问Aria2可以将`#1`所在行删除。
 
-**Step5. 预创建Cloudreve的数据库和配置文件，这里以`/dockercnf/cloudreve`为cloudreve配置目录**
-
-```bash
-mkdir -p /dockercnf/cloudreve \
-	&& touch /dockercnf/cloudreve/conf.ini \
-	&& touch /dockercnf/cloudreve/cloudreve.db
-```
-
-**Step6. 启动Cloudreve**
+**Step5. 启动Cloudreve**
 
 ```bash
 docker run -d \
@@ -195,9 +181,9 @@ docker run -d \
   --restart=unless-stopped \
   -v <PATH TO UPLOADS>:/cloudreve/uploads \
   -v <PATH TO TEMP>:/downloads \ #1
-  -v <PATH TO conf.ini>:/cloudreve/conf.ini \
-  -v <PATH TO cloudreve.db>:/cloudreve/cloudreve.db \
-  -v <PATH TO avatar>:/cloudreve/avatar \ 
+  -v <PATH TO config>:/cloudreve/config \
+  -v <PATH TO db>:/cloudreve/db \
+  -v <PATH TO avatar>:/cloudreve/avatar \
   xavierniu/cloudreve
 ```
 
@@ -209,11 +195,11 @@ docker run -d \
 
 - `<PATH TO UPLOADS>`:上传目录, 例如`/sharedfolders`
 - `<PATH TO TEMP>`: 临时下载文件夹，需要与Aria的`/downloads`对应，例如`/dockercnf/aria2/temp`（如不需要离线下载功能`#1`可以删除）
-- `<PATH TO conf.ini>`: 配置文件，如`/dockercnf/cloudreve/conf.ini`
-- ` <PATH TO cloudreve.db>`: 数据库文件，如`/dockercnf/cloudreve/cloudreve.db`
-- ` <PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
+- `<PATH TO config>`: 配置文件，如`/dockercnf/cloudreve/config`
+- `<PATH TO db`: 数据库文件，如`/dockercnf/cloudreve/db`
+- `<PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
 
-**Step7. 配置Cloudreve连接Aria2服务器**
+**Step6. 配置Cloudreve连接Aria2服务器**
 
 - 以管理员身份登陆
 - 点击"头像（右上角） > 管理面板"
@@ -258,14 +244,6 @@ server {
     proxy_set_header Host $host;
   }
 }
-```
-
-Cloudreve配置文件及数据库文件
-
-```bash
-mkdir -p /dockercnf/cloudreve \
-	&& touch /dockercnf/cloudreve/conf.ini \
-	&& touch /dockercnf/cloudreve/cloudreve.db
 ```
 
 **Step2. 下载环境文件以及Docker Compose文件**
