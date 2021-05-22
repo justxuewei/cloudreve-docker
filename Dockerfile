@@ -31,6 +31,7 @@ LABEL MAINTAINER="Xavier Niu"
 WORKDIR /cloudreve
 
 COPY entrypoint.sh ./
+COPY --from=builder /ProjectCloudreve/Cloudreve/cloudreve-main ./
 
 VOLUME ["/cloudreve/uploads", "/downloads", "/cloudreve/avatar", "/cloudreve/config", "/cloudreve/db"]
 
@@ -44,9 +45,5 @@ RUN echo ">>>>>> update dependencies" \
     && chmod +x entrypoint.sh
 
 EXPOSE 5212
-
-COPY --from=builder /ProjectCloudreve/Cloudreve/cloudreve-main ./
-
-COPY conf.ini ./config/
 
 ENTRYPOINT ["./entrypoint.sh"]
