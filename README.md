@@ -14,7 +14,7 @@
 
 ## 更新日志
 
-- `v3.3.2`: 取消了预创建`conf.ini`和`cloudreve.db`过程。在`v3.3.1`版本及以下更新到最新版本之前，请先备份旧版本的`cloudreve.db`文件，在使用新的命令部署之后，将原有的`cloudreve.db`文件拷贝至新的`/cloudreve/db`映射的文件夹中。
+- `v3.3.1+`: 取消了预创建`conf.ini`和`cloudreve.db`过程。原则上数据库的迁移工作是无感的，但是依然强烈建议`v3.3.1`及以下版本更新到最新版本之前，先备份旧版本的`cloudreve.db`和`conf.ini`文件（可以通过`docker logs -f cloudreve`查看当前的版本）。
 
 ## 获取PUID和PGID
 
