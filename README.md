@@ -14,7 +14,14 @@
 
 ## 更新日志
 
-- `v3.3.1+`: 取消了预创建`conf.ini`和`cloudreve.db`过程。原则上数据库的迁移工作是无感的，但是依然强烈建议`v3.3.1`及以下版本更新到最新版本之前，先备份旧版本的`cloudreve.db`和`conf.ini`文件（可以通过`docker logs -f cloudreve`查看当前的版本）。
+May 27, 2021: 取消了预创建conf.ini和cloudreve.db过程。原则上数据库的迁移工作是无感的，但是强烈建议**v3.3.1及以下版本**更新到最新版本之前，先备份旧版本的cloudreve.db和conf.ini文件（可以通过`docker logs -f cloudreve`查看当前的版本）。更新完成后，请将cloudreve.db文件复制到`<PATH TO db>`，向conf.ini文件追加数据库路径（如下所示）后复制到`<PATH TO config>`。
+
+```bash
+# conf.ini
+# 向下追加
+[Database]
+DBFile = /cloudreve/db/cloudreve.db
+```
 
 ## 获取PUID和PGID
 
@@ -48,7 +55,7 @@ docker run -d \
 - 首次启动后请执行`docker logs -f cloudreve`获取初始密码
 - PUID以及PGID的获取方式详见`获取PUID和PGID`
 - `TZ`设置时区，默认值为`Asia/Shanghai`
-- `<PATH TO UPLOADS>`:上传目录, 例如`/sharedfolders`
+- `<PATH TO uploads>`:上传目录, 例如`/sharedfolders`
 - `<PATH TO config>`: 配置文件夹，如`/dockercnf/cloudreve/config`
 - `<PATH TO db>`: 数据库文件夹，如`/dockercnf/cloudreve/db`
 - `<PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
