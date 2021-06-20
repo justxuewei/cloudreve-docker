@@ -1,7 +1,5 @@
 #!/bin/bash
 
-chmod +x ./cloudreve-main
-
 # database
 CLOUDREVE_DEFAULT_DB=cloudreve.db
 CLOUDREVE_DB=db/cloudreve.db
@@ -17,7 +15,7 @@ if [ ! -e $CLOUDREVE_DB ]; then
         mv $CLOUDREVE_DEFAULT_CONF $CLOUDREVE_CONF
     fi
     if [ ! e $CLOUDREVE_DEFAULT_DB ]; then
-        nohup ./cloudreve-main -c $CLOUDREVE_CONF > $CLOUDREVE_INIT_LOG 2>&1 &
+        nohup cloudreve -c $CLOUDREVE_CONF > $CLOUDREVE_INIT_LOG 2>&1 &
         echo "Waiting Cloudreve initializing..."
         sleep 5
         kill -9 $(ps -ef | grep cloudreve-main | grep -v grep | awk {'print $2'})
@@ -28,5 +26,5 @@ if [ ! -e $CLOUDREVE_DB ]; then
     echo -e "[Database]\nDBFile=$CLOUDREVE_DB" >> $CLOUDREVE_CONF
 fi
 
-./cloudreve-main -c $CLOUDREVE_CONF
+cloudreve -c $CLOUDREVE_CONF
 
