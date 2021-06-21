@@ -60,7 +60,7 @@ docker run -d \
 - `<PATH TO db>`: 数据库文件夹，如`/dockercnf/cloudreve/db`
 - `<PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
 
-如果你想使用Nginx作为反向代理服务器，或者使用Aira2作为离线下载服务，请参阅[Cloudreve Docker - NAC](./README-NAC.md)。如果你希望通过docker-compose的方式启动服务，请参阅[Cloudreve Docker - Docker Compose](./README-DOCKER-COMPOSE.md)。
+如果你想使用Nginx作为反向代理服务器，或者使用Aira2作为离线下载服务，请参阅[Cloudreve Docker - NAC](https://github.com/xavier-niu/cloudreve-docker/blob/master/README-NAC.md)。如果你希望通过docker-compose的方式启动服务，请参阅[Cloudreve Docker - Docker Compose](https://github.com/xavier-niu/cloudreve-docker/blob/master/README-DOCKER-COMPOSE.md)。
 
 ## 升级
 
