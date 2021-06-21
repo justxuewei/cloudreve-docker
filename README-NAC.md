@@ -7,13 +7,13 @@ NAC模式（Nginx+Aria2+Cloudreve），即启动Cloudreve，同时使用Nginx作
 
 ## 开始
 
-**Step1. 创建Network**
+### 创建Network
 
 ```bash
 docker network create my-network
 ```
 
-**Step2. 创建Nginx配置文件**
+### 创建Nginx配置文件
 
 ```bash
 mkdir -p /dockercnf/nginx/conf.d \
@@ -33,7 +33,7 @@ server {
 }
 ```
 
-**Step3. 启动Nginx服务**
+### 启动Nginx服务
 
 ```bash
 docker run -d \
@@ -46,7 +46,7 @@ docker run -d \
   nginx:alpine
 ```
 
-**Step4. 启动Aria2服务（如不需要离线下载功能该步骤略过）**
+### 启动Aria2服务（如不需要离线下载功能该步骤略过）
 
 ```bash
 docker run -d \
@@ -72,7 +72,7 @@ docker run -d \
 - `<PATH TO temp>`: 临时下载文件夹，需要与Cloudreve的`/downloads`对应，例如`/dockercnf/aria2/temp`。
 - 如果不需要外网访问Aria2可以将`#1`所在行删除。
 
-**Step5. 启动Cloudreve**
+### 启动Cloudreve
 
 ```bash
 docker run -d \
@@ -102,7 +102,7 @@ docker run -d \
 - `<PATH TO db>`: 数据库文件夹，如`/dockercnf/cloudreve/db`
 - `<PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
 
-**Step6. 配置Cloudreve连接Aria2服务器**
+### 配置Cloudreve连接Aria2服务器
 
 - 以管理员身份登陆
 - 点击"头像（右上角） > 管理面板"
