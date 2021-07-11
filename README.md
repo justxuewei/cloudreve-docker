@@ -14,7 +14,7 @@
 
 ## 更新日志
 
-May 27, 2021: 取消了预创建conf.ini和cloudreve.db过程。原则上数据库的迁移工作是无感的，但是强烈建议**v3.3.1及以下版本**更新到最新版本之前，先备份旧版本的cloudreve.db和conf.ini文件（可以通过`docker logs -f cloudreve`查看当前的版本）。更新完成后，请将cloudreve.db文件复制到`<PATH TO db>`，向conf.ini文件追加数据库路径（如下所示）后复制到`<PATH TO config>`。
+May 27, 2021: [⚠️⚠️⚠️]取消了预创建conf.ini和cloudreve.db过程。原则上数据库的迁移工作是无感的，但是强烈建议**v3.3.1及以下版本**更新到最新版本之前，先备份旧版本的cloudreve.db和conf.ini文件（可以通过`docker logs -f cloudreve`查看当前的版本）。更新完成后，请将cloudreve.db文件复制到`<PATH TO db>`，向conf.ini文件追加数据库路径（如下所示）后复制到`<PATH TO config>`。
 
 ```bash
 # conf.ini
