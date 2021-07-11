@@ -1,6 +1,6 @@
 # Cloudreve Docker
 
-![](https://img.shields.io/github/workflow/status/xavier-niu/cloudreve-docker/Publish%20Docker) ![](https://img.shields.io/badge/cloudreve-3.3.1-brightgreen) ![](https://img.shields.io/docker/image-size/xavierniu/cloudreve/latest) ![](https://img.shields.io/docker/pulls/xavierniu/cloudreve) ![](https://img.shields.io/badge/maintainer-xavierniu-lightgrey)
+![](https://img.shields.io/github/workflow/status/xavier-niu/cloudreve-docker/Publish%20Docker) ![](https://img.shields.io/badge/cloudreve-3.3.2-brightgreen) ![](https://img.shields.io/docker/image-size/xavierniu/cloudreve/latest) ![](https://img.shields.io/docker/pulls/xavierniu/cloudreve) ![](https://img.shields.io/badge/maintainer-xavierniu-lightgrey)
 
 优势
 
@@ -14,7 +14,7 @@
 
 ## 更新日志
 
-May 27, 2021: [⚠️⚠️⚠️]取消了预创建conf.ini和cloudreve.db过程。原则上数据库的迁移工作是无感的，但是强烈建议**v3.3.1及以下版本**更新到最新版本之前，先备份旧版本的cloudreve.db和conf.ini文件（可以通过`docker logs -f cloudreve`查看当前的版本）。更新完成后，请将cloudreve.db文件复制到`<PATH TO db>`，向conf.ini文件追加数据库路径（如下所示）后复制到`<PATH TO config>`。
+- v3.3.2(May 27, 2021): [**⚠️请注意**]取消了预创建conf.ini和cloudreve.db过程。原则上数据库的迁移工作是无感的，但是强烈建议**v3.3.1及以下版本**更新到最新版本之前，先备份旧版本的cloudreve.db和conf.ini文件（可以通过`docker logs -f cloudreve`查看当前的版本）。更新完成后，请将cloudreve.db文件复制到`<PATH TO db>`，向conf.ini文件追加数据库路径（如下所示）后复制到`<PATH TO config>`。
 
 ```bash
 # conf.ini
