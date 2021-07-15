@@ -22,4 +22,4 @@ if [ ! -e $CLOUDREVE_DB ]; then
     fi
 fi
 
-cloudreve -c $CLOUDREVE_CONF
+/cloudreve/cloudreve-main -c $CLOUDREVE_CONF
