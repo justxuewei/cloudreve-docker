@@ -30,7 +30,6 @@ LABEL MAINTAINER="Xavier Niu"
 
 WORKDIR /cloudreve
 
-COPY entrypoint.sh ./
 COPY --from=builder /ProjectCloudreve/Cloudreve/cloudreve-main /cloudreve/
 
 VOLUME ["/cloudreve/uploads", "/downloads", "/cloudreve/avatar", "/cloudreve/config", "/cloudreve/db"]
@@ -41,10 +40,9 @@ RUN echo ">>>>>> update dependencies" \
     && echo ">>>>>> set up timezone" \
     && cp /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
-    && echo ">>>>>> fix entrypoint premission" \
-    && chmod +x entrypoint.sh \
+    && echo ">>>>>> fix cloudreve-main premission" \
     && chmod +x /cloudreve/cloudreve-main
 
 EXPOSE 5212
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["./cloudreve-main", "-c", "/cloudreve/config/conf.ini"]
