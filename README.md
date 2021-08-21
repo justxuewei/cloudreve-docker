@@ -37,7 +37,7 @@ uid=1000(root) gid=1001(root)
 mkdir -p <PATH TO config>
 ```
 
-创建配置文件`vim <PATH TO config>/config.ini `（*该配置文件针对SQLite数据库，如需使用MySQL等数据库，请参见cloudreve官方文档*）
+创建配置文件`vim <PATH TO config>/conf.ini `（*该配置文件针对SQLite数据库，如需使用MySQL等数据库，请参见cloudreve官方文档*）
 
 ```ini
 # conf.ini
