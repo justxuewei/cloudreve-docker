@@ -24,16 +24,14 @@ uid=1000(root) gid=1001(root)
 
 ## 开始
 
-> 该配置文件针对SQLite数据库，如需使用MySQL等数据库，请参见cloudreve官方文档。
-
-目录说明
+目录
 
 - `<PATH TO uploads>`:上传目录，如`/sharedfolders`
 - `<PATH TO config>`: 配置文件夹，如`/dockercnf/cloudreve/config`
 - `<PATH TO db>`: 数据库文件夹，如`/dockercnf/cloudreve/db`
 - `<PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
 
-创建配置文件`vim <PATH TO config>/config.ini `
+创建配置文件[^1]`vim <PATH TO config>/config.ini `
 
 ```ini
 # conf.ini
@@ -80,3 +78,7 @@ docker stop cloudreve \
 ```
 
 重复上面的运行步骤再次启动容器即可。
+
+
+
+[^1]: 该配置文件针对SQLite数据库，如需使用MySQL等数据库，请参见cloudreve官方文档。
