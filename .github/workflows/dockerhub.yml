@@ -51,6 +51,6 @@ jobs:
       - name: Sync README.md
         uses: peter-evans/dockerhub-description@v2.1.0
         env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
-          DOCKERHUB_REPOSITORY: ${{ secrets.DOCKER_USERNAME }}/cloudreve
+          DOCKERHUB_REPOSITORY: ${{ secrets.DOCKERHUB_USERNAME }}/cloudreve
