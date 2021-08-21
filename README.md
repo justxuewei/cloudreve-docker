@@ -12,17 +12,6 @@
 - 简易安装
 - 内含详细的Cloudreve+Nginx+Aria2部署教程
 
-## 更新日志
-
-- v3.3.2(May 27, 2021): [**⚠️请注意**]取消了预创建conf.ini和cloudreve.db过程。原则上数据库的迁移工作是无感的，但是强烈建议**v3.3.1及以下版本**更新到最新版本之前，先备份旧版本的cloudreve.db和conf.ini文件（可以通过`docker logs -f cloudreve`查看当前的版本）。更新完成后，请将cloudreve.db文件复制到`<PATH TO db>`，向conf.ini文件追加数据库路径（如下所示）后复制到`<PATH TO config>`。
-
-```bash
-# conf.ini
-# 向下追加
-[Database]
-DBFile = /cloudreve/db/cloudreve.db
-```
-
 ## 获取PUID和PGID
 
 为什么要使用PUID和PGID参见[Understanding PUID and PGID](https://docs.linuxserver.io/general/understanding-puid-and-pgid)。假设当前登陆用户为`root`，则执行`id root`就会得到类似于下面的一段代码：
@@ -34,6 +23,29 @@ uid=1000(root) gid=1001(root)
 则在运行命令中的PUID填入`1000`，PGID填入`1001`。
 
 ## 开始
+
+目录
+
+- `<PATH TO uploads>`:上传目录，如`/sharedfolders`
+- `<PATH TO config>`: 配置文件夹，如`/dockercnf/cloudreve/config`
+- `<PATH TO db>`: 数据库文件夹，如`/dockercnf/cloudreve/db`
+- `<PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
+
+创建配置文件夹
+
+```bash
+mkdir -p <PATH TO config>
+```
+
+创建配置文件`vim <PATH TO config>/conf.ini `（*该配置文件针对SQLite数据库，如需使用MySQL等数据库，请参见cloudreve官方文档*）
+
+```ini
+# conf.ini
+[Database]
+DBFile = /cloudreve/db/cloudreve.db
+```
+
+启动cloudreve容器
 
 ```bash
 docker run -d \
@@ -55,12 +67,11 @@ docker run -d \
 - 首次启动后请执行`docker logs -f cloudreve`获取初始密码
 - PUID以及PGID的获取方式详见`获取PUID和PGID`
 - `TZ`设置时区，默认值为`Asia/Shanghai`
-- `<PATH TO uploads>`:上传目录, 例如`/sharedfolders`
-- `<PATH TO config>`: 配置文件夹，如`/dockercnf/cloudreve/config`
-- `<PATH TO db>`: 数据库文件夹，如`/dockercnf/cloudreve/db`
-- `<PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
 
-如果你想使用Nginx作为反向代理服务器，或者使用Aira2作为离线下载服务，请参阅[Cloudreve Docker - NAC](https://github.com/xavier-niu/cloudreve-docker/blob/master/README-NAC.md)。如果你希望通过docker-compose的方式启动服务，请参阅[Cloudreve Docker - Docker Compose](https://github.com/xavier-niu/cloudreve-docker/blob/master/README-DOCKER-COMPOSE.md)。
+其他教程
+
+- 如果你想使用Nginx作为反向代理服务器，或者使用Aira2作为离线下载服务，请参阅[Cloudreve Docker - NAC](https://github.com/xavier-niu/cloudreve-docker/blob/master/README-NAC.md)
+- 如果你希望通过docker-compose的方式启动服务，请参阅[Cloudreve Docker - Docker Compose](https://github.com/xavier-niu/cloudreve-docker/blob/master/README-DOCKER-COMPOSE.md)
 
 ## 升级
 
@@ -73,7 +84,3 @@ docker stop cloudreve \
 ```
 
 重复上面的运行步骤再次启动容器即可。
-
-## 有疑问？
-
-如果有任何问题可以在GitHub中创建一个新的issue或者通过邮件`a#nxw.name`与我取得联系。
