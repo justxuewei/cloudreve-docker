@@ -53,5 +53,5 @@ jobs:
         uses: peter-evans/dockerhub-description@v2.1.0
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
           DOCKERHUB_REPOSITORY: ${{ secrets.DOCKERHUB_USERNAME }}/cloudreve
