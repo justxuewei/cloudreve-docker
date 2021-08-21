@@ -20,7 +20,7 @@ RUN cd ./Cloudreve \
     && export COMMIT_SHA=$(git rev-parse --short HEAD) \
     && go build -a -o cloudreve-main -ldflags " -X 'github.com/HFO4/cloudreve/pkg/conf.BackendVersion=$CLOUDREVE_VERSION' -X 'github.com/HFO4/cloudreve/pkg/conf.LastCommit=$COMMIT_SHA'"
 
-FROM lsiobase/alpine:3.13
+FROM alpine:3.13
 
 ENV PUID=1000
 ENV PGID=1000
@@ -32,7 +32,10 @@ WORKDIR /cloudreve
 
 COPY --from=builder /ProjectCloudreve/Cloudreve/cloudreve-main /cloudreve/
 
-VOLUME ["/cloudreve/uploads", "/downloads", "/cloudreve/avatar", "/cloudreve/config", "/cloudreve/db"]
+RUN echo ">>>>>> set up PUID and PGID" \
+    && useradd appuser -r -u $PUID -g $PGID
+
+USER appuser
 
 RUN echo ">>>>>> update dependencies" \
     && apk update \
@@ -42,6 +45,8 @@ RUN echo ">>>>>> update dependencies" \
     && echo ${TZ} > /etc/timezone \
     && echo ">>>>>> fix cloudreve-main premission" \
     && chmod +x /cloudreve/cloudreve-main
+
+VOLUME ["/cloudreve/uploads", "/downloads", "/cloudreve/avatar", "/cloudreve/config", "/cloudreve/db"]
 
 EXPOSE 5212
 
