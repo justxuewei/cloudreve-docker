@@ -33,7 +33,8 @@ WORKDIR /cloudreve
 COPY --from=builder /ProjectCloudreve/Cloudreve/cloudreve-main /cloudreve/
 
 RUN echo ">>>>>> set up PUID and PGID" \
-    && useradd appuser -r -u $PUID -g $PGID
+    && addgroup -S -g $PGID appuser \
+    && adduser -S -u $PUID -s /sbin/nologin -G appuser appuser
 
 USER appuser
 
