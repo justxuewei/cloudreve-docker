@@ -22,8 +22,6 @@ RUN cd ./Cloudreve \
 
 FROM alpine:3.13
 
-ENV PUID=1000
-ENV PGID=1000
 ENV TZ="Asia/Shanghai"
 
 LABEL MAINTAINER="Xavier Niu"
@@ -38,14 +36,8 @@ RUN echo ">>>>>> update dependencies" \
     && echo ">>>>>> set up timezone" \
     && cp /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
-    && echo ">>>>>> set up PUID and PGID" \
-    && addgroup -S -g $PGID appuser \
-    && adduser -S -u $PUID -s /sbin/nologin -G appuser appuser \
     && echo ">>>>>> fix cloudreve-main premission" \
-    && chmod 740 cloudreve-main \
-    && chown appuser:appuser cloudreve-main
-
-USER appuser
+    && chmod +x cloudreve-main
 
 VOLUME ["/cloudreve/uploads", "/downloads", "/cloudreve/avatar", "/cloudreve/config", "/cloudreve/db"]
 
