@@ -28,15 +28,9 @@ ENV TZ="Asia/Shanghai"
 
 LABEL MAINTAINER="Xavier Niu"
 
-WORKDIR /cloudreve
+WORKDIR /Cloudreve
 
-COPY --from=builder /ProjectCloudreve/Cloudreve/cloudreve-main /cloudreve/
-
-RUN echo ">>>>>> set up PUID and PGID" \
-    && addgroup -S -g $PGID appuser \
-    && adduser -S -u $PUID -s /sbin/nologin -G appuser appuser
-
-USER appuser
+COPY --from=builder /ProjectCloudreve/Cloudreve/cloudreve-main ./
 
 RUN echo ">>>>>> update dependencies" \
     && apk update \
@@ -44,8 +38,14 @@ RUN echo ">>>>>> update dependencies" \
     && echo ">>>>>> set up timezone" \
     && cp /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
+    && echo ">>>>>> set up PUID and PGID" \
+    && addgroup -S -g $PGID appuser \
+    && adduser -S -u $PUID -s /sbin/nologin -G appuser appuser \
     && echo ">>>>>> fix cloudreve-main premission" \
-    && chmod +x /cloudreve/cloudreve-main
+    && chmod 740 cloudreve-main \
+    && chown appuser:appuser cloudreve-main
+
+USER appuser
 
 VOLUME ["/cloudreve/uploads", "/downloads", "/cloudreve/avatar", "/cloudreve/config", "/cloudreve/db"]
 
