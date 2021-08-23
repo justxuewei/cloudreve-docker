@@ -20,7 +20,7 @@ RUN cd ./Cloudreve \
     && export COMMIT_SHA=$(git rev-parse --short HEAD) \
     && go build -a -o cloudreve-main -ldflags " -X 'github.com/HFO4/cloudreve/pkg/conf.BackendVersion=$CLOUDREVE_VERSION' -X 'github.com/HFO4/cloudreve/pkg/conf.LastCommit=$COMMIT_SHA'"
 
-FROM alpine:3.13
+FROM ghcr.io/linuxserver/baseimage-alpine:3.14
 
 ENV TZ="Asia/Shanghai"
 
