@@ -33,6 +33,24 @@ server {
 }
 ```
 
+目录
+
+- `<PATH TO config>`: 配置文件夹，如`/dockercnf/cloudreve/config`
+
+创建配置文件夹
+
+```bash
+mkdir -p <PATH TO config>
+```
+
+创建配置文件`vim <PATH TO config>/conf.ini `（*该配置文件针对SQLite数据库，如需使用MySQL等数据库，请参见cloudreve官方文档*）
+
+```ini
+# conf.ini
+[Database]
+DBFile = /cloudreve/db/cloudreve.db
+```
+
 ### 下载环境文件以及Docker Compose文件
 
 下载环境文件

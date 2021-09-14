@@ -12,16 +12,6 @@
 - 简易安装
 - 内含详细的Cloudreve+Nginx+Aria2部署教程
 
-## 获取PUID和PGID
-
-为什么要使用PUID和PGID参见[Understanding PUID and PGID](https://docs.linuxserver.io/general/understanding-puid-and-pgid)。假设当前登陆用户为`root`，则执行`id root`就会得到类似于下面的一段代码：
-
-```
-uid=1000(root) gid=1001(root)
-```
-
-则在运行命令中的PUID填入`1000`，PGID填入`1001`。
-
 ## 开始
 
 目录
@@ -50,8 +40,6 @@ DBFile = /cloudreve/db/cloudreve.db
 ```bash
 docker run -d \
   --name cloudreve \
-  -e PUID=1000 \ # optional
-  -e PGID=1000 \ # optional
   -e TZ="Asia/Shanghai" \ # optional
   -p 5212:5212 \
   --restart=unless-stopped \
@@ -65,7 +53,6 @@ docker run -d \
 说明
 
 - 首次启动后请执行`docker logs -f cloudreve`获取初始密码
-- PUID以及PGID的获取方式详见`获取PUID和PGID`
 - `TZ`设置时区，默认值为`Asia/Shanghai`
 
 其他教程

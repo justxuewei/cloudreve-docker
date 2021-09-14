@@ -74,11 +74,32 @@ docker run -d \
 
 ### 启动Cloudreve
 
+目录
+
+- `<PATH TO uploads>`:上传目录，如`/sharedfolders`
+- `<PATH TO config>`: 配置文件夹，如`/dockercnf/cloudreve/config`
+- `<PATH TO db>`: 数据库文件夹，如`/dockercnf/cloudreve/db`
+- `<PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
+
+创建配置文件夹
+
+```bash
+mkdir -p <PATH TO config>
+```
+
+创建配置文件`vim <PATH TO config>/conf.ini `（*该配置文件针对SQLite数据库，如需使用MySQL等数据库，请参见cloudreve官方文档*）
+
+```ini
+# conf.ini
+[Database]
+DBFile = /cloudreve/db/cloudreve.db
+```
+
+启动cloudreve容器
+
 ```bash
 docker run -d \
   --name cloudreve \
-  -e PUID=1000 \ # optional
-  -e PGID=1000 \ # optional
   -e TZ="Asia/Shanghai" \ # optional
   --network my-network \
   --restart=unless-stopped \
@@ -93,14 +114,7 @@ docker run -d \
 说明
 
 - 首次启动后请执行`docker logs -f cloudreve`获取初始密码
-
-- PUID以及PGID的获取方式详见`获取PUID和PGID`
-
-- `<PATH TO uploads>`:上传目录, 例如`/sharedfolders`
-- `<PATH TO temp>`: 临时下载文件夹，需要与Aria的`/downloads`对应，例如`/dockercnf/aria2/temp`（如不需要离线下载功能`#1`可以删除）
-- `<PATH TO config>`: 配置文件夹，如`/dockercnf/cloudreve/config`
-- `<PATH TO db>`: 数据库文件夹，如`/dockercnf/cloudreve/db`
-- `<PATH TO avatar>`: 头像文件夹，如`/dockercnf/cloudreve/avatar`
+- `TZ`设置时区，默认值为`Asia/Shanghai`
 
 ### 配置Cloudreve连接Aria2服务器
 
