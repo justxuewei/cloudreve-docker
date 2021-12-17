@@ -24,6 +24,8 @@ uid=1000(root) gid=1001(root)
 
 ## 开始
 
+无安装运行 [![TeamCode try-it-now](https://static01.teamcode.com/badge/demo.svg)](https://www.teamcode.com/tin/clone?applicationId=270604044600766464)
+
 目录
 
 - `<PATH TO uploads>`:上传目录，如 `/sharedfolders`
