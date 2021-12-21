@@ -2,11 +2,9 @@ TeamCode Tin已将Cloudreve所需的云端运行环境打包成容器，用户�
 
 用户操作步骤：
 
-1.点击README中的Tin按钮（如下图），该按钮为Cloudreve Tin应用的访问网址。
+1.远程云端[生成 Cloudreve](https://www.teamcode.com/tin/clone?applicationId=270604044600766464){:target="_blank"}【更详细文档请见[这里](https://www.teamcode.com/docs/tin/clone-tin/)】
 
-![img](https://static01.teamcode.com/docs/202112201843912.png)
-
-2.点击按钮后，进入TeamCode登录页面（已登录用户可跳过该步骤）。
+2.进入TeamCode登录页面（已登录用户可跳过该步骤）。
 
 ![img](https://static01.teamcode.com/docs/202112201843463.png)
 
