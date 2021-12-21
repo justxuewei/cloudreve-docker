@@ -70,9 +70,9 @@ docker run -d \
 
 其他教程
 
-- 如果您想远程云端启动服务，请参阅 [Run In Cloud](https://github.com/xavier-niu/cloudreve-docker/blob/master/README-TEAMCODE.md)；
 - 如果你想使用 Nginx 作为反向代理服务器，或者使用 Aira2 作为离线下载服务，请参阅 [Cloudreve Docker - NAC](https://github.com/xavier-niu/cloudreve-docker/blob/master/README-NAC.md)；
 - 如果你希望通过 docker-compose 的方式启动服务，请参阅 [Cloudreve Docker - Docker Compose](https://github.com/xavier-niu/cloudreve-docker/blob/master/README-DOCKER-COMPOSE.md)。
+- 如果您想远程云端启动服务，请参阅 [Run In Cloud](https://github.com/xavier-niu/cloudreve-docker/blob/master/README-TEAMCODE.md) 【每月免费使用时间有限制，超过则需支付费用】；
 
 ## 升级
 
