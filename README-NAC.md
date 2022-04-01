@@ -53,6 +53,7 @@ docker run -d \
     --name aria2 \
     --restart unless-stopped \
     --log-opt max-size=1m \
+    --log-driver json-file \
     -e PUID=1000 \
     -e PGID=1000 \
     -e RPC_SECRET=<SECRET> \
