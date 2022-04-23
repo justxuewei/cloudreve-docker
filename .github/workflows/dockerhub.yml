@@ -1,6 +1,6 @@
 name: build cloudreve image
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   docker:
